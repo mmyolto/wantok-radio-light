@@ -1,0 +1,39 @@
+ON DEMAND (LISTEN AGAIN) — SETUP & WEEKLY ROUTINE
+==================================================
+
+ONE-TIME SETUP
+1. Firebase console → Firestore Database → Rules
+   Paste the whole of firebase/firestore.rules and click Publish.
+   (Adds the "episodes" collection and the "ondemand" request type.)
+
+2. Cloudinary uses the same upload preset as songs (wrl_songs, Unsigned).
+   Nothing else to set up.
+
+3. (Optional) Firestore → TTL policies → Create policy
+   Collection group: episodes   Timestamp field: expiresAt
+   Firebase will then delete expired episode records by itself.
+   Expired episodes are hidden from the website either way.
+
+WEEKLY ROUTINE (local programs)
+1. Export each program as MP3 (64–96 kbps mono is plenty for speech; keep under 100 MB).
+2. Newsroom → On demand → choose the program (the usual pastor fills in automatically —
+   change it if someone else preached), type the episode title and the date it aired,
+   choose the file (its duration is read automatically), click "Upload episode".
+   On the website each episode shows: Program, Title, Pastor, Duration, with Play and Download.
+   Episodes are listed under their air date; listeners can switch Newest first / Oldest first.
+3. It appears on the website (On Demand page) immediately and disappears after 14 days.
+
+INTERNATIONAL PROGRAMS (on request)
+1. Listener requests arrive in Newsroom → Requests, tagged "On demand request",
+   showing the program and episode they want.
+2. Upload the episode in the On demand tab (choose it under "International").
+3. Contact the listener, then click "Mark done" on the request.
+
+KEEPING CLOUDINARY TIDY (free plan storage)
+Taking an episode down only removes it from the website. Once a month, in Cloudinary →
+Media Library, search the tag  ondemand-YYYY-MM  (e.g. ondemand-2026-09) and delete
+that month's files.
+
+FACEBOOK FEED (News page)
+In index.html, find  const FACEBOOK_PAGE = '';  and paste your page address between
+the quotes, e.g.  const FACEBOOK_PAGE = 'https://www.facebook.com/YourPageName';

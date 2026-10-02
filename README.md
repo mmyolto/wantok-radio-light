@@ -8,18 +8,18 @@ Official website of **Wantok Radio Light**, PNG Christian Broadcasting Network
 | Path | Purpose |
 |------|---------|
 | `index.html` | The public website (Home, About, Programs, Projects, News, Support, On Demand, Contact). One page with a live player that keeps playing while you browse. |
-| `style.css` | All site styles. |
-| `main.js` | Site logic: pages, live player, news, On Demand, requests, giving, song uploads. Firebase settings are at the top. |
-| `extras.js` | Home page news cards, the giving pop-up and the pledge form pop-up. |
+| `css/style.css` | All site styles. |
+| `js/main.js` | Site logic: pages, live player, news, On Demand, requests, giving, song uploads. Firebase settings are at the top. |
+| `js/extras.js` | Home page news cards, the giving pop-up and the pledge form pop-up. |
 | `pledge-form.html` | Share-a-thon pledge form (also opens inside the site). |
 | `newsroom.html` | Staff Newsroom — stories, TokSave/prayer/On Demand requests, song submissions and On Demand uploads. Sign-in required. |
 | `admin.html` | Admin dashboard — live pledges, donations and totals. Admin accounts only. |
 | `aboutus.html`, `news.html`, … | Redirects so links to the old website still work. |
-| `*.webp`, `*.jpg`, `*.png`, `*.svg`, `*.mp4` | Photos, team portraits, bank logos and video used on the site. |
+| `images/` | Photos, team portraits, bank logos and video used on the site. |
 | `favicon.png`, `apple-touch-icon.png` | Browser and phone icons. |
 | `robots.txt`, `sitemap.xml` | For search engines. |
-| `firestore.rules` | Database security rules (publish in Firebase console → Firestore → Rules). |
-| `*-SETUP.txt` | Setup and how-to guides for staff. |
+| `firebase/firestore.rules` | Database security rules (publish in Firebase console → Firestore → Rules). |
+| `docs/` | Setup and how-to guides for staff. |
 
 ## Services used
 
@@ -31,11 +31,11 @@ Official website of **Wantok Radio Light**, PNG Christian Broadcasting Network
 
 The site is plain HTML, CSS and JavaScript — no build step.
 
-1. Upload everything **except** the `*-SETUP.txt` guides, `firestore.rules` and `README.md` to the web root for **wantokradio.org**
-   (usually `public_html/`). All files sit in one folder.
+1. Upload everything **except** `docs/`, `firebase/` and `README.md` to the web root for **wantokradio.org**
+   (usually `public_html/`). Keep the folder structure (`css/`, `js/`, `images/`).
 2. In Firebase console → Authentication → Settings → **Authorized domains**, add `wantokradio.org`
    (and `www.wantokradio.org` if you use it).
-3. Publish `firestore.rules` in Firebase console → Firestore Database → Rules.
+3. Publish `firebase/firestore.rules` in Firebase console → Firestore Database → Rules.
 4. Open the site and check: live stream plays, News loads, the pledge form opens and submits.
 
 Gallery and some partner logos are loaded from `wantokradio.org/assets/images/` — keep that folder on the server.
@@ -49,7 +49,7 @@ Gallery and some partner logos are loaded from `wantokradio.org/assets/images/` 
 | SWIFT | BOSPPGPM | KINIPGPG |
 | BSB | 088-950 | 028-038 |
 
-These appear on the Support page and giving pop-up (`index.html`) and in the pledge form (`pledge-form.html`, plus the copy built into `main.js` as `PLEDGE_HTML`).
+These appear on the Support page and giving pop-up (`index.html`) and in the pledge form and receipt (`pledge-form.html`).
 
 ## GitHub
 
@@ -59,9 +59,9 @@ if you test on GitHub Pages, add `<username>.github.io` to Firebase → Authenti
 
 ## Staff guides
 
-- `NEWSROOM-SETUP.txt` — adding journalists and admins
-- `PLEDGE-SETUP.txt` — Share-a-thon pledges
-- `SONG-UPLOAD-SETUP.txt` — song submissions
-- `ONDEMAND-SETUP.txt` — weekly On Demand uploads
+- `docs/NEWSROOM-SETUP.txt` — adding journalists and admins
+- `docs/PLEDGE-SETUP.txt` — Share-a-thon pledges
+- `docs/SONG-UPLOAD-SETUP.txt` — song submissions
+- `docs/ONDEMAND-SETUP.txt` — weekly On Demand uploads
 
 © Wantok Radio Light · PNG Christian Broadcasting Network
