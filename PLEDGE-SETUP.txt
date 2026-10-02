@@ -1,0 +1,39 @@
+WANTOK RADIO LIGHT — NEW FIREBASE PROJECT FOR PLEDGES
+====================================================
+Do this AFTER deleting the old WRL-ShareathonData project.
+Takes about 10 minutes. Free plan (Spark) — no credit card needed.
+
+STEP 1 — Create the new project
+  1. Go to https://console.firebase.google.com/
+  2. Click "Create a project" (or "Add project").
+  3. Name it:  wantok-radio-light
+  4. Google Analytics: turn it OFF → Create project → Continue.
+
+STEP 2 — Create the database
+  1. Left menu: Build → Firestore Database → Create database.
+  2. Location: asia-southeast1 (Singapore) → Next.
+  3. Choose "Start in production mode" → Create.
+
+STEP 3 — Publish the security rules
+  1. Firestore Database → "Rules" tab.
+  2. Delete everything in the box.
+  3. Open firebase/firestore.rules with Notepad, copy ALL of
+     it, paste it into the box → Publish.
+  (These let the public SUBMIT a pledge but never read anyone else's.)
+
+STEP 4 — Register the website and get the settings
+  1. Click the gear icon (top left) → Project settings.
+  2. Scroll to "Your apps" → click the  </>  (Web) icon.
+  3. App nickname: wantok website → Register app.
+     (Leave "Firebase Hosting" unticked.)
+  4. Firebase shows a box starting with  const firebaseConfig = {
+     These values go in the Firebase settings block of index.html, newsroom.html,
+     admin.html and pledge-form.html (already done for the current project).
+
+STEP 5 — Test
+  Submit a test pledge → it gets number WRL26 - 0001 → check it in
+  Firestore Database → Data → "pledges". Then delete the test pledge
+  and the "counters" collection so real pledges start at 0001.
+
+Viewing pledges any time:
+  Firestore Database → Data → pledges  (only your Google login can see them).

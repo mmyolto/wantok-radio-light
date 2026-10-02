@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shareathon Pledge Form – Wantok Radio Light</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#eef0ee;--card:#fff;--ink:#1d1f1d;--mute:#6b706b;--line:#8a8f8a;--acc:#1f5a2e;--acc2:#b8892b;--bar:#d9e6dc;--in:#f7faf7}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121512;--card:#1b1f1b;--ink:#e9ece9;--mute:#9aa19a;--line:#5d645d;--acc:#5fbf78;--acc2:#e0b455;--bar:#2a382d;--in:#232823}}
+:root[data-theme="dark"]{--bg:#121512;--card:#1b1f1b;--ink:#e9ece9;--mute:#9aa19a;--line:#5d645d;--acc:#5fbf78;--acc2:#e0b455;--bar:#2a382d;--in:#232823}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 "Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:980px;margin:0 auto;padding:12px}
+.paper{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:16px}
+.head{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
+.org{flex:1;min-width:240px;font-size:14px}
+.org h1{font-size:18px;margin:0 0 4px;letter-spacing:.2px}
+.org p{margin:2px 0}.org .g{margin-top:8px;font-size:14px}
+.ttl{text-align:right;min-width:220px}
+.ttl h2{margin:0;font-size:28px;font-style:italic;color:var(--mute);line-height:1.05;text-transform:uppercase;font-weight:800}
+.pn{margin-top:10px;border:1px solid var(--line);border-radius:6px;overflow:hidden;text-align:center}
+.pn div:first-child{background:var(--bar);font-style:italic;font-weight:700;color:var(--mute);padding:2px;border-bottom:1px solid var(--line)}
+.pn div:last-child{padding:6px;font-weight:700;font-size:18px}
+.box{border:2px solid var(--line);margin-top:14px}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:8px 10px;border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+label.f{display:flex;align-items:center;gap:8px;flex:1;min-width:200px}
+label.f span{white-space:nowrap}
+input[type=text],input[type=email],input[type=tel],input[type=number],select{flex:1;min-width:0;width:100%;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:var(--in);color:var(--ink);font:inherit}
+.opt{display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.opt input{width:20px;height:20px;accent-color:var(--acc)}
+.sec{padding:8px 4px}
+.bank{display:flex;flex-wrap:wrap;gap:6px 40px;margin:6px 0 0 20px}
+.bank small{display:block;color:var(--mute)}
+.sig{font-family:"Brush Script MT","Segoe Script",cursive;font-size:24px}
+.verse{text-align:center;font-style:italic;font-size:14px;margin-top:14px;color:var(--mute)}
+.btn{display:block;width:100%;margin-top:14px;padding:13px;border:0;border-radius:10px;background:var(--acc);color:#fff;font-size:17px;font-weight:700;cursor:pointer}
+.btn:disabled{opacity:.6}
+.err{color:#c0392b;font-weight:600;margin-top:10px}
+.ok{text-align:center;padding:30px 10px}.ok h2{color:var(--acc);font-size:26px}
+.ok .no{font-size:34px;font-weight:800;margin:10px 0}
+.receipt{text-align:left;max-width:420px;margin:18px auto 0;border:1px solid var(--line);border-radius:10px;padding:12px 16px;background:var(--in)}
+.rrow{display:flex;justify-content:space-between;gap:12px;padding:5px 0;border-bottom:1px dashed var(--line);font-size:14px}
+.rrow:last-child{border-bottom:0}
+.rrow span{color:var(--mute)}
+.hide{display:none}
+@media (max-width:560px){.ttl{text-align:left}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+</head>
+<body>
+<div class="wrap">
+  <div id="warn" class="err hide">The live database is unavailable right now, so pledges can't be saved.</div>
+
+  <!-- FORM -->
+  <div id="vF" class="paper">
+    <div id="formArea">
+      <div class="head">
+        <div class="org">
+          <h1>WANTOK RADIO LIGHT</h1>
+          <p>P.O. Box 1273, Port Moresby, National Capital District, Papua New Guinea</p>
+          <p>Phone: (675) 326 0946 Fax: (675) 326 1104 Mobile: (675) 73 882 283</p>
+          <p>Email: wantok@wantokradio.org</p>
+          <p class="g">We are grateful to God, for granting this opportunity to invest in His work, through this ministry, which is to spread the Gospel of Jesus Christ throughout Papua New Guinea and Overseas.</p>
+        </div>
+        <div class="ttl"><h2>Shareathon<br>Pledge Form</h2>
+          <div class="pn"><div>Pledge Number</div><div id="pno">WRL26 - …</div></div></div>
+      </div>
+
+      <div class="box">
+        <div class="row"><label class="f"><span>Name:</span><input type="text" id="name" autocomplete="name"></label></div>
+        <div class="row"><span>Category: <i>(Tick Box)</i></span>
+          <span id="cats" style="display:flex;flex-wrap:wrap;gap:8px 18px"></span></div>
+        <div class="row"><label class="f"><span>Address:</span><input type="text" id="address"></label></div>
+        <div class="row"><span>Location:</span>
+          <span id="loc" style="display:flex;flex-wrap:wrap;gap:8px 22px"></span></div>
+        <div class="row hide" id="rowPNG">
+          <label class="f"><span>City/Town:</span><input type="text" id="city"></label>
+          <label class="f"><span>Province:</span><select id="province"><option value="">Select province…</option></select></label></div>
+        <div class="row hide" id="rowOS">
+          <label class="f"><span>Country:</span><select id="country"><option value="">Select country…</option></select></label>
+          <label class="f"><span>Location:</span><input type="text" id="osLocation"></label></div>
+        <div class="row">
+          <label class="f"><span>Email:</span><input type="email" id="email" autocomplete="email"></label>
+          <label class="f"><span>Mobile:</span><span style="display:flex;gap:6px;flex:1;min-width:180px">
+            <input type="text" id="mcode" readonly placeholder="+—" style="flex:0 0 64px;text-align:center;background:var(--bar);font-weight:700">
+            <input type="tel" id="mobile" style="flex:1"></span></label></div>
+        <div class="row">
+          <label class="f"><span>Church:</span><input type="text" id="church"></label>
+          <label class="f"><span>Congregation:</span><input type="text" id="cong"></label></div>
+        <div class="row"><label class="f"><span>Pledge Amount: <span id="curP">K</span></span><input type="number" id="pledge" min="1" step="0.01" inputmode="decimal"></label></div>
+      </div>
+
+      <div class="sec">
+        <div style="margin-top:8px">Proposed Payment Schedule: <i>(Please Tick)</i></div>
+        <div id="sched" style="display:flex;flex-wrap:wrap;gap:8px 22px;margin:8px 0 0 20px"></div>
+        <div class="row" style="border:0;padding-left:0"><label class="f"><span>More Details:</span><input type="text" id="more"></label></div>
+        <div class="row" style="border:0;padding-left:0">
+          <label class="f" style="flex:0 1 220px"><span>Amount: <span id="curA">K</span></span><input type="number" id="amt" min="0" step="0.01" inputmode="decimal"></label>
+          <span id="meth" style="display:flex;flex-wrap:wrap;gap:8px 22px"></span></div>
+        <div class="bank">
+          <div>Direct Deposit BSP# 1000908049<small>(Account Name: Wantok Radio Light)</small></div>
+          <div>Direct Deposit Kina # 1175 7718<small>(Account Name: Wantok Radio Light)</small></div></div>
+        <div class="row" style="border:0;padding-left:0;margin-top:8px">
+          <label class="f" style="flex:2 1 300px"><span>Sign your name:</span><input type="text" id="sign" class="sig" autocomplete="off"></label>
+          <label class="f" style="flex:0 1 190px"><span>Date:</span><input type="text" id="date" readonly></label></div>
+      </div>
+      <div class="verse">“Now may He who supplies seed to the sower and bread for food, supply and multiply the seed you have sown and increase the fruits of your righteousness”..Amen..2 Corinthians 9:10</div>
+      <div id="err" class="err hide"></div>
+      <button class="btn" id="submit">Submit Pledge</button>
+    </div>
+    <div id="done" class="ok hide">
+      <h2>Thank you! God bless you.</h2>
+      <div>Your pledge number is</div>
+      <div class="no" id="doneNo"></div>
+      <div class="receipt" id="receipt">
+        <div class="rrow"><span>Name</span><b id="rName"></b></div>
+        <div class="rrow"><span>Category</span><b id="rCat"></b></div>
+        <div class="rrow"><span>Location</span><b id="rLoc"></b></div>
+        <div class="rrow"><span>Pledge Amount</span><b id="rAmt"></b></div>
+        <div class="rrow"><span>Payment Schedule</span><b id="rSched"></b></div>
+        <div class="rrow"><span>Date</span><b id="rDate"></b></div>
+      </div>
+      <button class="btn" id="download" style="max-width:280px;margin:16px auto 0">Download Receipt (PDF)</button>
+      <button class="btn" id="again" style="max-width:280px;margin:10px auto 0;background:transparent;color:var(--acc);border:2px solid var(--acc)">Enter another pledge</button>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, doc, collection, runTransaction, onSnapshot }
+  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+// ── Firebase setup ───────────────────────────────────────────────
+// Paste the config object from Firebase Console → Project settings
+// → General → Your apps → SDK setup and configuration.
+const firebaseConfig = /*WRL_FIREBASE*/{
+  apiKey: "AIzaSyBuNp4RqyJlhmcH5jpGhWRDLJEEgErCl6Y",
+  authDomain: "wantok-radio-light-81519.firebaseapp.com",
+  projectId: "wantok-radio-light-81519",
+  storageBucket: "wantok-radio-light-81519.firebasestorage.app",
+  messagingSenderId: "953977170930",
+  appId: "1:953977170930:web:2ba5970733622a49b9996b"
+}/*END_WRL_FIREBASE*/;
+const FIREBASE_READY = !String(firebaseConfig.apiKey).startsWith("PASTE");
+const fapp = FIREBASE_READY ? initializeApp(firebaseConfig) : null;
+const fdb = FIREBASE_READY ? getFirestore(fapp) : null;
+const counterRef = FIREBASE_READY ? doc(fdb, "counters", "pledges") : null;
+// ──────────────────────────────────────────────────────────────────
+
+const PROVS=["Bougainville (AROB)","Central","Chimbu (Simbu)","East New Britain","East Sepik","Eastern Highlands","Enga","Gulf","Hela","Jiwaka","Madang","Manus","Milne Bay","Morobe","National Capital District","New Ireland","Oro (Northern)","Sandaun (West Sepik)","Southern Highlands","West New Britain","Western (Fly)","Western Highlands"];
+const CATS=["Individual","Family","Church","Group","Company","Government","School"];
+const SCHED=["Single","Fortnightly","Monthly","Others"];
+const METH=["Cash","Mobile/Internet Banking"];
+const PNG_CODE="+675";
+const PNG_CUR="K";
+const COUNTRIES=[["Afghanistan","+93","AFN"],["Albania","+355","ALL"],["Algeria","+213","DZD"],["American Samoa","+1684","USD"],["Andorra","+376","EUR"],["Angola","+244","AOA"],["Anguilla","+1264","XCD"],["Antigua and Barbuda","+1268","XCD"],["Argentina","+54","ARS"],["Armenia","+374","AMD"],["Aruba","+297","AWG"],["Australia","+61","AUD"],["Austria","+43","EUR"],["Azerbaijan","+994","AZN"],["Bahamas","+1242","BSD"],["Bahrain","+973","BHD"],["Bangladesh","+880","BDT"],["Barbados","+1246","BBD"],["Belarus","+375","BYN"],["Belgium","+32","EUR"],["Belize","+501","BZD"],["Benin","+229","XOF"],["Bhutan","+975","BTN"],["Bolivia","+591","BOB"],["Bosnia and Herzegovina","+387","BAM"],["Botswana","+267","BWP"],["Brazil","+55","BRL"],["Brunei","+673","BND"],["Bulgaria","+359","BGN"],["Burkina Faso","+226","XOF"],["Burundi","+257","BIF"],["Cambodia","+855","KHR"],["Cameroon","+237","XAF"],["Canada","+1","CAD"],["Cape Verde","+238","CVE"],["Central African Republic","+236","XAF"],["Chad","+235","XAF"],["Chile","+56","CLP"],["China","+86","CNY"],["Colombia","+57","COP"],["Comoros","+269","KMF"],["Congo (DRC)","+243","CDF"],["Congo (Republic)","+242","XAF"],["Cook Islands","+682","NZD"],["Costa Rica","+506","CRC"],["Croatia","+385","EUR"],["Cuba","+53","CUP"],["Cyprus","+357","EUR"],["Czechia","+420","CZK"],["Denmark","+45","DKK"],["Djibouti","+253","DJF"],["Dominica","+1767","XCD"],["Dominican Republic","+1809","DOP"],["East Timor","+670","USD"],["Ecuador","+593","USD"],["Egypt","+20","EGP"],["El Salvador","+503","USD"],["Equatorial Guinea","+240","XAF"],["Eritrea","+291","ERN"],["Estonia","+372","EUR"],["Eswatini","+268","SZL"],["Ethiopia","+251","ETB"],["Fiji","+679","FJD"],["Finland","+358","EUR"],["France","+33","EUR"],["Gabon","+241","XAF"],["Gambia","+220","GMD"],["Georgia","+995","GEL"],["Germany","+49","EUR"],["Ghana","+233","GHS"],["Greece","+30","EUR"],["Grenada","+1473","XCD"],["Guam","+1671","USD"],["Guatemala","+502","GTQ"],["Guinea","+224","GNF"],["Guinea-Bissau","+245","XOF"],["Guyana","+592","GYD"],["Haiti","+509","HTG"],["Honduras","+504","HNL"],["Hong Kong","+852","HKD"],["Hungary","+36","HUF"],["Iceland","+354","ISK"],["India","+91","INR"],["Indonesia","+62","IDR"],["Iran","+98","IRR"],["Iraq","+964","IQD"],["Ireland","+353","EUR"],["Israel","+972","ILS"],["Italy","+39","EUR"],["Ivory Coast","+225","XOF"],["Jamaica","+1876","JMD"],["Japan","+81","JPY"],["Jordan","+962","JOD"],["Kazakhstan","+7","KZT"],["Kenya","+254","KES"],["Kiribati","+686","AUD"],["Kosovo","+383","EUR"],["Kuwait","+965","KWD"],["Kyrgyzstan","+996","KGS"],["Laos","+856","LAK"],["Latvia","+371","EUR"],["Lebanon","+961","LBP"],["Lesotho","+266","LSL"],["Liberia","+231","LRD"],["Libya","+218","LYD"],["Liechtenstein","+423","CHF"],["Lithuania","+370","EUR"],["Luxembourg","+352","EUR"],["Macau","+853","MOP"],["Madagascar","+261","MGA"],["Malawi","+265","MWK"],["Malaysia","+60","MYR"],["Maldives","+960","MVR"],["Mali","+223","XOF"],["Malta","+356","EUR"],["Marshall Islands","+692","USD"],["Mauritania","+222","MRU"],["Mauritius","+230","MUR"],["Mexico","+52","MXN"],["Micronesia","+691","USD"],["Moldova","+373","MDL"],["Monaco","+377","EUR"],["Mongolia","+976","MNT"],["Montenegro","+382","EUR"],["Morocco","+212","MAD"],["Mozambique","+258","MZN"],["Myanmar","+95","MMK"],["Namibia","+264","NAD"],["Nauru","+674","AUD"],["Nepal","+977","NPR"],["Netherlands","+31","EUR"],["New Caledonia","+687","XPF"],["New Zealand","+64","NZD"],["Nicaragua","+505","NIO"],["Niger","+227","XOF"],["Nigeria","+234","NGN"],["Niue","+683","NZD"],["North Korea","+850","KPW"],["North Macedonia","+389","MKD"],["Norway","+47","NOK"],["Oman","+968","OMR"],["Pakistan","+92","PKR"],["Palau","+680","USD"],["Palestine","+970","ILS"],["Panama","+507","PAB"],["Papua New Guinea","+675","PGK"],["Paraguay","+595","PYG"],["Peru","+51","PEN"],["Philippines","+63","PHP"],["Poland","+48","PLN"],["Portugal","+351","EUR"],["Puerto Rico","+1787","USD"],["Qatar","+974","QAR"],["Romania","+40","RON"],["Russia","+7","RUB"],["Rwanda","+250","RWF"],["Saint Lucia","+1758","XCD"],["Samoa","+685","WST"],["San Marino","+378","EUR"],["Saudi Arabia","+966","SAR"],["Senegal","+221","XOF"],["Serbia","+381","RSD"],["Seychelles","+248","SCR"],["Sierra Leone","+232","SLE"],["Singapore","+65","SGD"],["Slovakia","+421","EUR"],["Slovenia","+386","EUR"],["Solomon Islands","+677","SBD"],["Somalia","+252","SOS"],["South Africa","+27","ZAR"],["South Korea","+82","KRW"],["South Sudan","+211","SSP"],["Spain","+34","EUR"],["Sri Lanka","+94","LKR"],["Sudan","+249","SDG"],["Suriname","+597","SRD"],["Sweden","+46","SEK"],["Switzerland","+41","CHF"],["Syria","+963","SYP"],["Taiwan","+886","TWD"],["Tajikistan","+992","TJS"],["Tanzania","+255","TZS"],["Thailand","+66","THB"],["Togo","+228","XOF"],["Tonga","+676","TOP"],["Trinidad and Tobago","+1868","TTD"],["Tunisia","+216","TND"],["Turkey","+90","TRY"],["Turkmenistan","+993","TMT"],["Tuvalu","+688","AUD"],["Uganda","+256","UGX"],["Ukraine","+380","UAH"],["United Arab Emirates","+971","AED"],["United Kingdom","+44","GBP"],["United States","+1","USD"],["Uruguay","+598","UYU"],["Uzbekistan","+998","UZS"],["Vanuatu","+678","VUV"],["Vatican City","+379","EUR"],["Venezuela","+58","VES"],["Vietnam","+84","VND"],["Yemen","+967","YER"],["Zambia","+260","ZMW"],["Zimbabwe","+263","USD"]];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const K=n=>Number(n||0).toLocaleString("en-US",{minimumFractionDigits:0,maximumFractionDigits:2});
+const pad=n=>String(n).padStart(4,"0");
+const today=()=>{const d=new Date();return String(d.getDate()).padStart(2,"0")+"/"+String(d.getMonth()+1).padStart(2,"0")+"/"+d.getFullYear()};
+
+function radios(el,name,list){el.innerHTML=list.map(v=>`<label class="opt"><input type="radio" name="${name}" value="${esc(v)}">${esc(v)}</label>`).join("")}
+radios($("cats"),"cat",CATS);radios($("sched"),"sched",SCHED);radios($("meth"),"meth",METH);radios($("loc"),"loc",["PNG","Overseas"]);
+PROVS.forEach(p=>$("province").add(new Option(p,p)));
+COUNTRIES.forEach(([n,c])=>$("country").add(new Option(n,n)));
+$("date").value=today();
+
+function setCurrency(cur){$("curP").textContent=cur||"K";$("curA").textContent=cur||"K"}
+
+$("loc").addEventListener("change",e=>{
+  if(e.target.name!=="loc")return;
+  const isPNG=e.target.value==="PNG";
+  $("rowPNG").classList.toggle("hide",!isPNG);
+  $("rowOS").classList.toggle("hide",isPNG);
+  const c=COUNTRIES.find(c=>c[0]===$("country").value);
+  $("mcode").value=isPNG?PNG_CODE:(c?.[1]||"");
+  setCurrency(isPNG?PNG_CUR:(c?.[2]||"K"));
+});
+$("country").addEventListener("change",()=>{
+  const c=COUNTRIES.find(c=>c[0]===$("country").value);
+  $("mcode").value=c?.[1]||"";
+  setCurrency(c?.[2]||"K");
+});
+
+let nextSeq = 1;
+
+function nextLabel(){$("pno").textContent="WRL26 - "+pad(nextSeq)}
+
+function init(){
+  if(!FIREBASE_READY){$("warn").textContent="The pledge form is not connected to the database yet. Please try again soon.";$("warn").classList.remove("hide");$("submit").disabled=true;return}
+  try{
+    onSnapshot(counterRef, snap=>{
+      const cur = snap.exists() ? (snap.data().seq||0) : 0;
+      nextSeq = cur+1;
+      nextLabel();
+    }, e=>{$("warn").classList.remove("hide");$("submit").disabled=true});
+  }catch(e){$("warn").classList.remove("hide");$("submit").disabled=true}
+}
+
+const val=n=>(document.querySelector(`input[name=${n}]:checked`)||{}).value||"";
+function fail(m){const e=$("err");e.textContent=m;e.classList.remove("hide")}
+
+async function claimNumber(data){
+  const newRef = doc(collection(fdb,"pledges"));
+  return await runTransaction(fdb, async (tx)=>{
+    const snap = await tx.get(counterRef);
+    const cur = snap.exists() ? (snap.data().seq||0) : 0;
+    const n = cur+1;
+    tx.set(counterRef, {seq:n});
+    tx.set(newRef, {...data, seq:n, pledgeNo:"WRL26 - "+pad(n), createdAt:Date.now()});
+    return n;
+  });
+}
+
+$("submit").onclick=async()=>{
+  $("err").classList.add("hide");
+  const loc=val("loc");
+  const mcode=$("mcode").value;
+  const mnum=$("mobile").value.trim();
+  const d={name:$("name").value.trim(),category:val("cat"),address:$("address").value.trim(),
+    location:loc,city:"",province:"",country:"",osLocation:"",currency:$("curP").textContent,
+    email:$("email").value.trim(),mobile:mnum?(mcode+" "+mnum).trim():"",
+    church:$("church").value.trim(),congregation:$("cong").value.trim(),pledge:parseFloat($("pledge").value),
+    schedule:val("sched"),more:$("more").value.trim(),amount:parseFloat($("amt").value)||0,method:val("meth"),
+    sign:$("sign").value.trim(),date:today()};
+  if(loc==="PNG"){d.city=$("city").value.trim();d.province=$("province").value}
+  else if(loc==="Overseas"){d.country=$("country").value.trim();d.osLocation=$("osLocation").value.trim()}
+  if(!d.name)return fail("Please enter the name.");
+  if(!d.category)return fail("Please tick a category.");
+  if(!loc)return fail("Please select PNG or Overseas.");
+  if(loc==="PNG"&&!d.province)return fail("Please select a province.");
+  if(loc==="Overseas"&&!d.country)return fail("Please enter the country.");
+  if(mnum&&!mcode)return fail("Please select a country to get the mobile code.");
+  if(!(d.pledge>0))return fail("Please enter the pledge amount.");
+  if(!d.schedule)return fail("Please tick a proposed payment schedule.");
+  if(d.amount>0&&!d.method)return fail("Please choose Cash or Mobile/Internet Banking for the amount.");
+  if(!d.sign)return fail("Please sign your name.");
+  $("submit").disabled=true;$("submit").textContent="Saving…";
+  try{
+    const n=await claimNumber(d);
+    const pledgeNo="WRL26 - "+pad(n);
+    $("doneNo").textContent=pledgeNo;
+    const locText=loc==="PNG"?[d.city,d.province].filter(Boolean).join(", "):[d.osLocation,d.country].filter(Boolean).join(", ");
+    $("rName").textContent=d.name;
+    $("rCat").textContent=d.category;
+    $("rLoc").textContent=locText||"—";
+    $("rAmt").textContent=d.currency+" "+K(d.pledge);
+    $("rSched").textContent=d.schedule;
+    $("rDate").textContent=d.date;
+    lastReceipt={...d,pledgeNo,locText};
+    $("formArea").classList.add("hide");$("done").classList.remove("hide");
+  }catch(e){fail("Could not save the pledge. Please try again.")}
+  $("submit").disabled=false;$("submit").textContent="Submit Pledge";
+};
+
+let lastReceipt=null;
+$("download").onclick=()=>{
+  if(!lastReceipt||!window.jspdf)return;
+  const {jsPDF}=window.jspdf;
+  const doc2=new jsPDF({unit:"pt",format:"a5"});
+  const W=doc2.internal.pageSize.getWidth();
+  let y=50;
+  doc2.setFont("helvetica","bold");doc2.setFontSize(16);
+  doc2.text("WANTOK RADIO LIGHT",W/2,y,{align:"center"});y+=20;
+  doc2.setFont("helvetica","normal");doc2.setFontSize(10);
+  doc2.text("Shareathon Pledge Receipt",W/2,y,{align:"center"});y+=30;
+  doc2.setDrawColor(150);doc2.line(40,y,W-40,y);y+=24;
+  doc2.setFont("helvetica","bold");doc2.setFontSize(13);
+  doc2.text(lastReceipt.pledgeNo,W/2,y,{align:"center"});y+=28;
+  doc2.setFont("helvetica","normal");doc2.setFontSize(11);
+  const rows=[["Name",lastReceipt.name],["Category",lastReceipt.category],
+    ["Location",lastReceipt.locText||"—"],["Pledge Amount",lastReceipt.currency+" "+K(lastReceipt.pledge)],
+    ["Payment Schedule",lastReceipt.schedule],["Date",lastReceipt.date]];
+  rows.forEach(([k,v])=>{doc2.setTextColor(110);doc2.text(k,50,y);doc2.setTextColor(20);doc2.text(String(v),W-50,y,{align:"right"});y+=22});
+  y+=14;doc2.setDrawColor(150);doc2.line(40,y,W-40,y);y+=26;
+  doc2.setFont("helvetica","italic");doc2.setFontSize(9);doc2.setTextColor(90);
+  const verse='"Now may He who supplies seed to the sower and bread for food, supply and multiply the seed you have sown and increase the fruits of your righteousness"  ..Amen..2 Corinthians 9:10';
+  doc2.text(doc2.splitTextToSize(verse,W-80),W/2,y,{align:"center"});
+  doc2.save((lastReceipt.pledgeNo||"pledge-receipt").replace(/\s+/g,"")+".pdf");
+};
+
+$("again").onclick=()=>{
+  document.querySelectorAll("#formArea input:not([readonly]),#formArea select").forEach(i=>{if(i.type==="radio")i.checked=false;else i.value=""});
+  $("mcode").value="";
+  setCurrency("K");
+  $("rowPNG").classList.add("hide");$("rowOS").classList.add("hide");
+  $("date").value=today();$("done").classList.add("hide");$("formArea").classList.remove("hide");
+};
+init();
+</script>
+</body>
+</html>

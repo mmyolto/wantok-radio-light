@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Newsroom — Wantok Radio Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0f1b2d;--gold:#e8a93b;--gold-soft:#f6e3bd;--cream:#fbf8f2;--paper:#fff;--text:#1d2533;--muted:#5b6474;--line:#e7e1d6;--red:#b5402c;--green:#1f7a3f}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--text);line-height:1.55;font-size:16px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--ink);line-height:1.2}
+  button,input,select,textarea{font:inherit}
+  .top{background:var(--ink);color:#fff;padding:0 24px}
+  .top .in{max-width:1180px;margin:0 auto;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:Fraunces,serif;font-size:1.15rem}
+  .brand small{display:block;font-family:Inter,sans-serif;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft)}
+  .who{display:flex;align-items:center;gap:12px;font-size:.9rem;color:rgba(255,255,255,.75)}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:.7rem 1.2rem;font-weight:600;cursor:pointer;font-size:.92rem}
+  .btn-gold{background:var(--gold);color:var(--ink)}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-line{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3)}
+  .btn-danger{background:#fbeae7;color:var(--red)}
+  .btn:disabled{opacity:.55;cursor:default}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:28px}
+  .login{max-width:420px;margin:70px auto}
+  .login h1{font-size:1.8rem;margin-bottom:6px}
+  .muted{color:var(--muted)}
+  label{display:grid;gap:6px;font-size:.85rem;font-weight:600;color:var(--ink)}
+  input,select,textarea{width:100%;padding:.75rem .9rem;border:1px solid var(--line);border-radius:12px;background:var(--cream);color:var(--text);font-size:1rem;font-weight:400}
+  textarea{resize:vertical;min-height:120px}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+  .stack{display:grid;gap:16px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .msg{padding:.8rem 1rem;border-radius:12px;font-size:.92rem}
+  .msg.err{background:#fbeae7;color:var(--red)}
+  .msg.ok{background:#e3f3e8;color:var(--green)}
+  .hide{display:none!important}
+  .layout{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+  .list{display:grid;gap:10px;max-height:calc(100vh - 220px);overflow:auto;padding-right:4px}
+  .item{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--paper);cursor:pointer;text-align:left}
+  .item:hover,.item.on{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,169,59,.2)}
+  .thumb{width:64px;height:48px;border-radius:8px;background:linear-gradient(160deg,#1d3355,var(--ink));object-fit:cover;display:block}
+  .item b{display:block;font-size:.92rem;color:var(--ink);line-height:1.3}
+  .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+  .tag{font-size:.68rem;font-weight:600;letter-spacing:.04em;padding:.12rem .5rem;border-radius:999px;background:#eef1f5;color:#455066}
+  .tag.f{background:var(--gold-soft);color:#6b4a0e}
+  .tag.d{background:#fbeae7;color:var(--red)}
+  .tag.p{background:#e3f3e8;color:var(--green)}
+  .head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .photo{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center}
+  .photo .prev{width:200px;aspect-ratio:16/10;border-radius:12px;background:linear-gradient(160deg,#1d3355,var(--ink));object-fit:cover;display:block;border:1px solid var(--line)}
+  .checks{display:flex;flex-wrap:wrap;gap:22px}
+  .check{display:flex;align-items:center;gap:10px;font-weight:500;font-size:.95rem}
+  .check input{width:20px;height:20px;accent-color:var(--gold)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:18px}
+  .hint{font-size:.8rem;color:var(--muted);font-weight:400}
+  .empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+  .ntabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid var(--line)}
+  .ntabs button{border:0;background:none;padding:.8rem 1.1rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:8px}
+  .ntabs button.on{color:var(--ink);border-color:var(--gold)}
+  .badge{background:var(--red);color:#fff;font-size:.72rem;border-radius:999px;padding:.1rem .45rem}
+  .seg{display:inline-flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
+  .seg button{border:0;background:none;padding:.4rem .9rem;border-radius:999px;font-weight:600;font-size:.85rem;color:var(--muted);cursor:pointer}
+  .seg button.on{background:var(--ink);color:#fff}
+  .rqi{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:grid;gap:8px}
+  .rqi .top2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+  .rqi p{white-space:pre-wrap}
+  .rqi small{color:var(--muted)}
+  .tag.t{background:#e8edf5;color:#34507a}
+  .tag.pr{background:#f3ece0;color:#7a5a1c}
+  .dn{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+  .dn b{font-family:Fraunces,serif;font-size:1.2rem;color:var(--ink)}
+  .dn small{display:block;color:var(--muted)}
+  @media (max-width:900px){.layout[style]{grid-template-columns:1fr!important}}
+  .live{color:#1f7a3f;font-size:.72rem;font-weight:700;letter-spacing:.08em}
+  .pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .pstats div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .pstats small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+  .pstats b{font-family:Fraunces,serif;font-size:1.6rem;color:var(--ink)}
+  .pgrid{display:grid;grid-template-columns:1fr 280px;gap:16px;align-items:start}
+  .ptable{width:100%;border-collapse:collapse;font-size:.88rem}
+  .ptable th{position:sticky;top:0;background:var(--ink);color:#fff;text-align:left;padding:10px 12px;font-weight:600;white-space:nowrap}
+  .ptable td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+  .ptable tr.new td{animation:flash 2.5s ease}
+  @keyframes flash{0%{background:var(--gold-soft)}100%{background:transparent}}
+  .ptable td.num{text-align:right;white-space:nowrap;font-weight:600}
+  .prov{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+  @media (max-width:900px){.pstats{grid-template-columns:1fr 1fr}.pgrid{grid-template-columns:1fr}}
+  .song{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:grid;gap:10px}
+  .song audio{width:100%}
+  .song .acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .song select{width:auto;padding:.5rem .8rem}
+  @media (max-width:900px){.layout{grid-template-columns:1fr}.list{max-height:none}.row,.photo{grid-template-columns:1fr}}
+  .refline{font-size:.9rem;padding:8px 12px;border-radius:10px;background:#eef4fb;margin:8px 0}
+  .refline.chk{background:#fdf0dc;color:#7a4a12}
+  .refline.ok{background:#e7f5ec;color:#1f6b3b}
+  .rmv{color:#b3261e;border-color:#e8b4b0}
+  .odprog{display:flex;align-items:center;gap:10px;font-size:.85rem}
+  .odprog .pbar{flex:1;height:8px;border-radius:99px;background:#eee;overflow:hidden}.odprog .pbar i{display:block;height:100%;width:0;background:var(--gold);transition:width .2s}
+  .ep{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;gap:8px}
+  .ep audio{width:100%}
+  .ep .left{font-size:.78rem;font-weight:700;border-radius:99px;padding:.2rem .6rem;background:#fdf0dc;color:#7a4a12}
+  .ep .left.x{background:#f3e1df;color:#a5281b}
+</style>
+</head>
+<body>
+<div class="top"><div class="in">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="18" fill="#e8a93b"/><circle cx="19" cy="21" r="4" fill="#0f1b2d"/><path d="M11 14a11 11 0 0 1 16 0M14 17a7 7 0 0 1 10 0" stroke="#0f1b2d" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+    <span>Wantok Radio Light<small>Newsroom</small></span>
+  </div>
+  <div class="who hide" id="who"><span id="whoEmail"></span><button class="btn btn-ghost" id="logout">Sign out</button></div>
+</div></div>
+
+<!-- Sign in -->
+<div class="wrap" id="vLogin">
+  <div class="card login stack">
+    <div><h1>Newsroom sign in</h1><p class="muted">For Wantok Radio Light reporters and editors.</p></div>
+    <label>Email<input type="email" id="email" autocomplete="username"></label>
+    <label>Password<input type="password" id="pass" autocomplete="current-password"></label>
+    <div id="loginMsg" class="msg err hide"></div>
+    <button class="btn btn-gold" id="loginBtn" style="justify-content:center">Sign in</button>
+    <button class="btn btn-line" id="resetBtn" style="justify-content:center">Forgot password?</button>
+  </div>
+</div>
+
+<!-- Newsroom -->
+<div class="wrap hide" id="vApp">
+  <nav class="ntabs"><button class="on" data-tab="stories">Stories</button><button data-tab="requests">Requests <span class="badge hide" id="rqCount"></span></button><button data-tab="songs">Songs <span class="badge hide" id="sgCount"></span></button><button data-tab="ondemand">On demand</button></nav>
+  <div class="layout" data-panel="stories">
+    <div>
+      <div class="head"><h2>Stories</h2><button class="btn btn-gold" id="newBtn">+ New story</button></div>
+      <div class="list" id="list"></div>
+      <div id="starterBox" class="hide" style="margin-top:14px">
+        <div class="empty">No stories yet.<br><button class="btn btn-line" id="starterBtn" style="margin-top:12px">Add the 3 starter stories</button></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h2 id="formTitle">New story</h2><span class="hint" id="savedHint"></span></div>
+      <div class="stack">
+        <label>Headline<input id="fTitle" maxlength="140" placeholder="e.g. New FM site: Wantok Radio Light now on air in Nuku"></label>
+        <div class="row">
+          <label>Category<select id="fCat"></select></label>
+          <label>Date<input type="date" id="fDate"></label>
+        </div>
+        <label>Reporter / author<input id="fAuthor" maxlength="80" placeholder="e.g. Andy Moses"></label>
+        <label>Summary <span class="hint">One or two sentences shown on the news card.</span><textarea id="fSummary" maxlength="300" style="min-height:70px"></textarea></label>
+        <label>Full story <span class="hint">Leave a blank line between paragraphs.</span><textarea id="fBody" style="min-height:240px"></textarea></label>
+        <div class="photo">
+          <img class="prev" id="fPrev" alt="">
+          <div class="stack" style="gap:8px">
+            <label>Photo <span class="hint">JPG or PNG. It is resized automatically.</span><input type="file" id="fPhoto" accept="image/*"></label>
+            <button class="btn btn-line hide" id="removePhoto" type="button" style="justify-self:start">Remove photo</button>
+          </div>
+        </div>
+        <div class="row">
+          <label>Button text <span class="hint">Optional, e.g. "Make a pledge"</span><input id="fLinkText" maxlength="40"></label>
+          <label>Button link <span class="hint">Optional web address</span><input id="fLinkUrl" placeholder="https://…"></label>
+        </div>
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="fFeatured"> Main feature (top of the News page)</label>
+          <label class="check"><input type="checkbox" id="fPublished" checked> Published (visible on the website)</label>
+        </div>
+        <div id="formMsg" class="msg hide"></div>
+        <div class="actions">
+          <button class="btn btn-danger hide" id="delBtn">Delete story</button>
+          <span></span>
+          <button class="btn btn-gold" id="saveBtn">Save story</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-panel="requests" class="hide">
+    <div class="head"><h2>TokSaves, prayer &amp; on demand requests</h2>
+      <div class="seg"><button class="on" data-rqf="new">New</button><button data-rqf="done">Done</button><button data-rqf="all">All</button></div></div>
+    <div class="stack" id="rqList"></div>
+  </div>
+
+
+  <div data-panel="ondemand" class="hide">
+    <div class="layout">
+      <div>
+        <div class="head"><h2>On demand episodes</h2><div class="seg"><button class="on" data-odf="live">Online now</button><button data-odf="expired">Expired</button></div></div>
+        <p class="hint" style="margin:-6px 0 14px">Each episode is shown on the website for 14 days, then disappears automatically. Delete expired ones here to keep things tidy.</p>
+        <div class="stack" id="odList"></div>
+      </div>
+      <div class="card">
+        <div class="head"><h2>Upload an episode</h2></div>
+        <div class="stack">
+          <label>Program<select id="odProg"><optgroup label="Local programs"><option>Sunday Service</option><option>Sunday Evening Service</option><option>Praying for the Nation</option><option>Belo-Taim Devotion</option><option>Story Bilong Mi</option><option>Krai Bilong ol Meri</option><option>Kirapim Gutpela Sindaun</option><option>Health Nuggets</option><option>Choice Bilong Listener</option><option>Hope Behind Bars</option><option>Morning Light Devotion</option><option>Night Light Devotion</option><option>Chapel in the Air</option><option>Prayer for International Brothers and Sisters</option></optgroup><optgroup label="International (on request)"><option>Focus on the Family</option><option>Back to the Bible</option><option>Leading the Way</option><option>15 Minutes in the Word</option><option>Heritage &amp; Hope</option><option>Unshackled</option><option>Redeeming the Time</option><option>Reach Beyond</option><option>Keys for Kids</option><option>Women of Hope</option><option>Champions Arise</option><option>Guidelines for Living</option><option>Heralds of Hope</option><option>Resounding Liberty Radio Hour</option><option>Adventures in Odyssey</option><option>Your Story Hour</option><option>FamilyLife Today</option></optgroup><option>Other</option></select></label>
+          <label id="odOtherWrap" class="hide">Program name<input id="odOther" maxlength="80"></label>
+          <label>Episode title<input id="odTitle" maxlength="140" placeholder="e.g. Praying for our leaders"></label>
+          <label>Pastor / presenter<input id="odPastor" maxlength="100" placeholder="e.g. Ps. John Wak"></label>
+          <div class="row">
+            <label>Date it aired<input type="date" id="odDate"></label>
+            <label>Keep online for<select id="odDays"><option value="14" selected>14 days</option><option value="7">7 days</option></select></label>
+          </div>
+          <label>Audio file <span class="hint">MP3 is best — up to 100 MB</span><input type="file" id="odFile" accept="audio/*,.mp3,.m4a,.wav"></label>
+          <div class="hint" id="odDurHint"></div>
+          <div class="odprog hide" id="odProgBox"><div class="pbar"><i id="odBar"></i></div><span id="odPct"></span></div>
+          <div id="odMsg" class="msg hide"></div>
+          <div class="actions"><span></span><button class="btn btn-gold" id="odUpload">Upload episode</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div data-panel="songs" class="hide">
+    <div class="head"><h2>Song submissions</h2>
+      <div class="seg"><button class="on" data-sgf="new">New</button><button data-sgf="shortlisted">Shortlisted</button><button data-sgf="aired">On air</button><button data-sgf="declined">Not suitable</button><button data-sgf="check">Archive check</button><button data-sgf="all">All</button></div></div>
+    <div class="stack" id="sgList"></div>
+  </div>
+</div>
+
+<!-- Not an editor -->
+<div class="wrap hide" id="vDenied">
+  <div class="card login stack">
+    <h1>No newsroom access</h1>
+    <p class="muted">You're signed in, but this account isn't on the newsroom editors list. Ask the station administrator to add your email address.</p>
+    <div class="msg err" id="deniedWhy" style="font-size:.88rem;line-height:1.5"></div>
+    <button class="btn btn-line" id="logout2">Sign out</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, deleteDoc, updateDoc, writeBatch, serverTimestamp, increment, query, orderBy, limit, onSnapshot, Timestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+/* ── Firebase project (same as the Shareathon pledge form) ── */
+const firebaseConfig = {
+  apiKey: "AIzaSyBuNp4RqyJlhmcH5jpGhWRDLJEEgErCl6Y",
+  authDomain: "wantok-radio-light-81519.firebaseapp.com",
+  projectId: "wantok-radio-light-81519",
+  storageBucket: "wantok-radio-light-81519.firebasestorage.app",
+  messagingSenderId: "953977170930",
+  appId: "1:953977170930:web:2ba5970733622a49b9996b"
+};
+const CATEGORIES = ["Testimonies", "Church News", "Israel News", "Awareness"];
+/* Starter stories — same as on the News page */
+const STARTERS = [{"id":"shareathon-2026","title":"Share-a-thon 2026: help us reach the unreached","category":"Church News","date":"2026-10-01","author":"Wantok Radio Light","featured":true,"published":true,"summary":"Our yearly Share-a-thon fundraising drive is here. Every pledge helps keep the gospel on air across Papua New Guinea.","body":"Share-a-thon is Wantok Radio Light's yearly fundraising drive, and it is how this ministry stays on air.\n\nYour giving keeps our studio in Gerehu running, carries our signal by satellite to our FM sites around the nation, and helps us build for the future, including the new Wantok Radio Light Studio Building.\n\nYou can make your Share-a-thon 2026 pledge online using our Shareathon Pledge Form. You will receive a pledge number and a receipt straight away. You can also call the office on (675) 326 0946 or visit us at Gerehu Stage 2, Sivari Road.\n\nThank you for your continued support. We are still on air today as a testimony of your giving.","linkText":"Make a pledge","linkUrl":"#/pledge"},{"id":"new-fm-site-nuku","title":"New FM site: Wantok Radio Light now on air in Nuku","category":"Church News","date":"2026-09-30","author":"Wantok Radio Light","featured":false,"published":true,"summary":"Listeners in Nuku, Sandaun Province, can now tune in to Wantok Radio Light on FM.","body":"Wantok Radio Light is now broadcasting on FM in Nuku, Sandaun Province.\n\nNuku joins our growing network of FM sites across Papua New Guinea. Our signal starts at the studio in Gerehu and reaches each site via satellite, bringing Christian programming, prayer and teaching to communities right where they are.\n\nWe thank God, and every partner and Share-a-thon giver who made this possible.","linkText":"See our coverage map","linkUrl":"#/coverage"},{"id":"prison-ministry-14-graduates","title":"14 graduates as Wantok Radio Light works with the prison","category":"Testimonies","date":"2026-09-29","author":"Wantok Radio Light","featured":false,"published":true,"summary":"Our work with the prison has celebrated 14 graduates.","body":"Wantok Radio Light has been working with the prison, and we are celebrating 14 graduates.\n\nOur prison ministry program, Hope Behind Bars with Ps. Simon Kuman, airs on Thursdays and Saturdays from 9:00 to 10:00am, bringing the hope of the gospel to those behind bars.\n\nPlease keep the graduates, their families and our prison ministry team in your prayers.","linkText":"","linkUrl":""}];
+
+if (String(firebaseConfig.apiKey).startsWith('PASTE')) { document.getElementById('loginMsg').textContent = 'The Newsroom is not connected to the database yet.'; document.getElementById('loginMsg').classList.remove('hide'); }
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+const show = (id, on) => $(id).classList.toggle('hide', !on);
+
+CATEGORIES.forEach(c => $('fCat').insertAdjacentHTML('beforeend', `<option>${c}</option>`));
+
+let stories = [], current = null, photoFull = null, photoThumb = null, photoChanged = false;
+
+/* ── Sign in / out ── */
+$('loginBtn').onclick = async () => {
+  show('loginMsg', false);
+  try { await signInWithEmailAndPassword(auth, $('email').value.trim(), $('pass').value); }
+  catch (e) { $('loginMsg').textContent = 'Sign in failed. Check your email and password.'; show('loginMsg', true); }
+};
+$('pass').addEventListener('keydown', e => { if (e.key === 'Enter') $('loginBtn').click(); });
+$('resetBtn').onclick = async () => {
+  const em = $('email').value.trim();
+  if (!em) { $('loginMsg').textContent = 'Type your email address first, then press "Forgot password?".'; show('loginMsg', true); return; }
+  try { await sendPasswordResetEmail(auth, em); $('loginMsg').textContent = 'A password reset email has been sent.'; $('loginMsg').className = 'msg ok'; }
+  catch (e) { $('loginMsg').textContent = 'Could not send the reset email.'; $('loginMsg').className = 'msg err'; }
+};
+$('logout').onclick = $('logout2').onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, async user => {
+  show('who', !!user); show('vLogin', !user); show('vApp', false); show('vDenied', false);
+  if (!user) return;
+  $('whoEmail').textContent = user.email;
+  const em = (user.email || '').trim().toLowerCase();
+  let ok = false, why = '';
+  try {
+    const d = await getDoc(doc(db, 'editors', em));
+    ok = d.exists();
+    if (!ok) why = `Checked the editors list for "${em}" — no matching document. In Firestore → editors, the Document ID must be exactly: ${em}`;
+  } catch (e) {
+    why = e.code === 'permission-denied'
+      ? `The database refused the check (permission-denied). The latest security rules are probably not published yet: Firestore → Rules → paste the rules → Publish. (Signed in as ${em}.)`
+      : `Could not reach the database (${e.code || e.message}). Check your internet connection, or open newsroom.html from your computer instead of the preview. (Signed in as ${em}.)`;
+  }
+  if (!ok) { $('deniedWhy').textContent = why; show('vDenied', true); return; }
+  show('vApp', true);
+  await loadStories();
+  newStory();
+  loadRequests(); loadSongs();
+});
+
+/* ── Stories list ── */
+async function loadStories() {
+  const snap = await getDocs(collection(db, 'news'));
+  stories = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
+  renderList();
+}
+function renderList() {
+  show('starterBox', stories.length === 0);
+  $('list').innerHTML = stories.map(s => `
+    <button class="item${current && current.id === s.id ? ' on' : ''}" data-id="${s.id}">
+      ${s.thumb ? `<img class="thumb" src="${s.thumb}" alt="">` : `<span class="thumb"></span>`}
+      <span><b>${esc(s.title || 'Untitled')}</b>
+        <span class="tags"><span class="tag">${esc(s.category || '')}</span><span class="tag">${s.date || ''}</span>
+        ${s.featured ? '<span class="tag f">Main feature</span>' : ''}${s.published ? '<span class="tag p">Published</span>' : '<span class="tag d">Draft</span>'}</span></span>
+    </button>`).join('');
+  $('list').querySelectorAll('.item').forEach(b => b.onclick = () => editStory(stories.find(s => s.id === b.dataset.id)));
+}
+const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+/* ── Form ── */
+function fill(s) {
+  $('fTitle').value = s.title || ''; $('fCat').value = s.category || CATEGORIES[0];
+  $('fDate').value = s.date || new Date().toISOString().slice(0, 10); $('fAuthor').value = s.author || '';
+  $('fSummary').value = s.summary || ''; $('fBody').value = s.body || '';
+  $('fLinkText').value = s.linkText || ''; $('fLinkUrl').value = s.linkUrl || '';
+  $('fFeatured').checked = !!s.featured; $('fPublished').checked = s.published !== false;
+  photoFull = null; photoThumb = s.thumb || null; photoChanged = false; $('fPhoto').value = '';
+  $('fPrev').src = s.thumb || ''; show('removePhoto', !!s.thumb);
+  show('formMsg', false); $('savedHint').textContent = '';
+}
+function newStory() { current = null; $('formTitle').textContent = 'New story'; show('delBtn', false); fill({}); renderList(); }
+function editStory(s) { current = s; $('formTitle').textContent = 'Edit story'; show('delBtn', true); fill(s); renderList(); }
+$('newBtn').onclick = newStory;
+
+/* Resize photos in the browser so they load fast on mobile data */
+async function resize(file, maxW, quality) {
+  const img = await createImageBitmap(file);
+  const sc = Math.min(1, maxW / img.width);
+  const c = document.createElement('canvas'); c.width = Math.round(img.width * sc); c.height = Math.round(img.height * sc);
+  c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+  let q = quality, out = c.toDataURL('image/webp', q);
+  if (!out.startsWith('data:image/webp')) out = c.toDataURL('image/jpeg', q);
+  while (out.length > 850000 && q > 0.4) { q -= 0.1; out = c.toDataURL(out.startsWith('data:image/webp') ? 'image/webp' : 'image/jpeg', q); }
+  return out;
+}
+$('fPhoto').onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    photoFull = await resize(f, 1400, 0.8); photoThumb = await resize(f, 640, 0.72); photoChanged = true;
+    $('fPrev').src = photoThumb; show('removePhoto', true);
+  } catch (err) { msg('That photo could not be read. Try a JPG or PNG.', 'err'); }
+};
+$('removePhoto').onclick = () => { photoFull = null; photoThumb = null; photoChanged = true; $('fPrev').src = ''; $('fPhoto').value = ''; show('removePhoto', false); };
+
+function msg(t, kind) { $('formMsg').textContent = t; $('formMsg').className = 'msg ' + kind; show('formMsg', true); }
+const slug = t => (t || 'story').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60) + '-' + Date.now().toString(36);
+
+$('saveBtn').onclick = async () => {
+  const title = $('fTitle').value.trim();
+  if (!title) return msg('Please add a headline.', 'err');
+  if (!$('fBody').value.trim()) return msg('Please write the story.', 'err');
+  $('saveBtn').disabled = true; $('saveBtn').textContent = 'Saving…';
+  try {
+    const id = current ? current.id : slug(title);
+    const data = {
+      title, category: $('fCat').value, date: $('fDate').value, author: $('fAuthor').value.trim(),
+      summary: $('fSummary').value.trim(), body: $('fBody').value.trim(),
+      linkText: $('fLinkText').value.trim(), linkUrl: $('fLinkUrl').value.trim(),
+      featured: $('fFeatured').checked, published: $('fPublished').checked,
+      thumb: photoThumb || null, hasImage: !!photoThumb, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email
+    };
+    const batch = writeBatch(db);
+    batch.set(doc(db, 'news', id), data, { merge: true });
+    if (photoChanged) {
+      if (photoFull) batch.set(doc(db, 'newsImages', id), { data: photoFull });
+      else batch.delete(doc(db, 'newsImages', id));
+    }
+    if (data.featured) stories.filter(s => s.featured && s.id !== id).forEach(s => batch.update(doc(db, 'news', s.id), { featured: false }));
+    await batch.commit();
+    await loadStories();
+    editStory(stories.find(s => s.id === id));
+    msg(data.published ? 'Saved and published. It is now live on the News page.' : 'Saved as a draft. It is not on the website yet.', 'ok');
+  } catch (e) {
+    msg('Could not save: ' + (e.code === 'permission-denied' ? 'your account is not allowed to edit news.' : (e.message || e)), 'err');
+  }
+  $('saveBtn').disabled = false; $('saveBtn').textContent = 'Save story';
+};
+
+$('delBtn').onclick = async () => {
+  if (!current || !confirm('Delete "' + current.title + '"? This cannot be undone.')) return;
+  const b = writeBatch(db); b.delete(doc(db, 'news', current.id)); b.delete(doc(db, 'newsImages', current.id));
+  await b.commit(); await loadStories(); newStory(); msg('Story deleted.', 'ok');
+};
+
+$('starterBtn').onclick = async () => {
+  $('starterBtn').disabled = true;
+  const b = writeBatch(db);
+  STARTERS.forEach(s => { const { id, ...rest } = s; b.set(doc(db, 'news', id), { ...rest, thumb: null, hasImage: false, updatedAt: serverTimestamp(), updatedBy: auth.currentUser.email }); });
+  await b.commit(); await loadStories();
+};
+
+/* ── Tabs ── */
+document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hide', p.dataset.panel !== b.dataset.tab));
+  if (b.dataset.tab === 'requests') loadRequests();
+  if (b.dataset.tab === 'songs') loadSongs();
+  if (b.dataset.tab === 'ondemand') loadEpisodes();
+});
+const fmt = ts => ts && ts.toDate ? ts.toDate().toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+
+/* ── TokSaves & prayer requests ── */
+let requests = [], rqFilter = 'new';
+async function loadRequests() {
+  const snap = await getDocs(query(collection(db, 'requests'), orderBy('createdAt', 'desc'), limit(300)));
+  requests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  const n = requests.filter(r => r.status !== 'done').length;
+  $('rqCount').textContent = n; show('rqCount', n > 0);
+  renderRequests();
+}
+function renderRequests() {
+  const list = requests.filter(r => rqFilter === 'all' || (rqFilter === 'done' ? r.status === 'done' : r.status !== 'done'));
+  $('rqList').innerHTML = list.length ? list.map(r => `
+    <div class="rqi">
+      <div class="top2"><span class="tags"><span class="tag ${r.type === 'toksave' ? 't' : r.type === 'ondemand' ? 'f' : 'pr'}">${r.type === 'toksave' ? 'TokSave' : r.type === 'ondemand' ? 'On demand request' : 'Prayer request'}</span>
+        ${r.onAir ? '<span class="tag f">OK to pray on air</span>' : ''}${r.status === 'done' ? '<span class="tag p">Done</span>' : ''}</span>
+        <small>${fmt(r.createdAt)}</small></div>
+      <b>${esc(r.name)} · ${esc(r.contact)}</b>
+      ${r.program ? `<small><b>Program wanted: ${esc(r.program)}</b> — upload it in the On demand tab, then contact the listener.</small>` : ''}${r.location ? `<small>Location: ${esc(r.location)}</small>` : ''}${r.org ? `<small>Organisation: ${esc(r.org)}</small>` : ''}${r.dates ? `<small>Dates to announce: ${esc(r.dates)}</small>` : ''}
+      <p>${esc(r.message)}</p>
+      <div><button class="btn btn-line" data-rqdone="${r.id}" data-to="${r.status === 'done' ? 'new' : 'done'}">${r.status === 'done' ? 'Mark as new' : 'Mark done'}</button></div>
+    </div>`).join('') : '<div class="empty">Nothing here.</div>';
+  $('rqList').querySelectorAll('[data-rqdone]').forEach(b => b.onclick = async () => {
+    await updateDoc(doc(db, 'requests', b.dataset.rqdone), { status: b.dataset.to }); loadRequests();
+  });
+}
+document.querySelectorAll('[data-rqf]').forEach(b => b.onclick = () => {
+  rqFilter = b.dataset.rqf; document.querySelectorAll('[data-rqf]').forEach(x => x.classList.toggle('on', x === b)); renderRequests();
+});
+
+
+/* ── Song submissions (files stored on Cloudinary, details in Firebase) ── */
+let songs = [], sgFilter = 'new';
+const SONG_STATUS = { new: 'New', shortlisted: 'Shortlisted', aired: 'On air', declined: 'Not suitable' };
+async function loadSongs() {
+  try {
+    const snap = await getDocs(query(collection(db, 'songs'), orderBy('createdAt', 'desc'), limit(300)));
+    songs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (e) { songs = []; $('sgList').innerHTML = '<div class="empty">Could not load songs: ' + esc(e.code || e.message) + '</div>'; return; }
+  const n = songs.filter(x => (x.status || 'new') === 'new').length;
+  $('sgCount').textContent = n; show('sgCount', n > 0);
+  renderSongs();
+}
+function renderSongs() {
+  const list = songs.filter(x => sgFilter === 'all' || (sgFilter === 'check' ? x.archiveCheck === 'pending' : (x.status || 'new') === sgFilter));
+  const mb = b => b ? (b / 1048576).toFixed(1) + ' MB' : '';
+  const mins = d => d ? Math.floor(d / 60) + ':' + String(Math.round(d % 60)).padStart(2, '0') : '';
+  $('sgList').innerHTML = list.length ? list.map(x => `
+    <div class="song">
+      <div class="top2" style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b style="font-size:1.05rem">${esc(x.title)} — ${esc(x.artist)}</b><small class="muted">${fmt(x.createdAt)}</small></div>
+      <small class="muted">${esc(x.language || '')}${x.from ? ' · ' + esc(x.from) : ''} · ${esc(x.contact)} ${[mins(x.duration), mb(x.bytes)].filter(Boolean).length ? '· ' + [mins(x.duration), mb(x.bytes)].filter(Boolean).join(' · ') : ''}</small>
+      ${x.referenceUrl ? `<div class="refline">Reference letter: <a href="${esc(x.referenceUrl)}" target="_blank" rel="noopener">${esc(x.referenceName || 'Open letter')}</a></div>`
+        : x.knownArtist ? `<div class="refline ${x.archiveCheck === 'pending' ? 'chk' : 'ok'}">${x.archiveCheck === 'pending'
+            ? '<b>No reference — says they are known to WRL.</b> Check the archive: confirm, or remove the upload (artist agreed to removal if not recognised).'
+            : 'No reference — confirmed in WRL archive' + (x.archiveBy ? ' by ' + esc(x.archiveBy) : '') + '.'}</div>` : ''}
+      ${x.notes ? `<p style="white-space:pre-wrap">${esc(x.notes)}</p>` : ''}
+      <audio controls preload="none" src="${esc(x.url)}"></audio>
+      <div class="acts">
+        <a class="btn btn-line" href="${esc(String(x.url).replace('/upload/', '/upload/fl_attachment/'))}">Download</a>
+        ${x.archiveCheck === 'pending' ? `<button class="btn btn-line" data-arch="${x.id}">Confirm in archive</button><button class="btn btn-line rmv" data-rmv="${x.id}">Remove upload</button>` : ''}
+        <select data-sgset="${x.id}">${Object.entries(SONG_STATUS).map(([k, v]) => `<option value="${k}"${(x.status || 'new') === k ? ' selected' : ''}>${v}</option>`).join('')}</select>
+      </div>
+    </div>`).join('') : '<div class="empty">No songs here.</div>';
+  $('sgList').querySelectorAll('[data-sgset]').forEach(sel => sel.onchange = async () => {
+    await updateDoc(doc(db, 'songs', sel.dataset.sgset), { status: sel.value, reviewedBy: auth.currentUser.email });
+    loadSongs();
+  });
+}
+document.getElementById('sgList').addEventListener('click', async e => {
+  const a = e.target.closest('[data-arch]'), r = e.target.closest('[data-rmv]');
+  if (a) { a.disabled = true; await updateDoc(doc(db, 'songs', a.dataset.arch), { archiveCheck: 'confirmed', archiveBy: auth.currentUser.email }); loadSongs(); }
+  if (r) {
+    if (r.dataset.sure !== '1') { r.dataset.sure = '1'; r.textContent = 'Click again to remove'; return; }
+    r.disabled = true; await deleteDoc(doc(db, 'songs', r.dataset.rmv)); loadSongs();
+  }
+});
+document.querySelectorAll('[data-sgf]').forEach(b => b.onclick = () => {
+  sgFilter = b.dataset.sgf; document.querySelectorAll('[data-sgf]').forEach(x => x.classList.toggle('on', x === b)); renderSongs();
+});
+
+/* ── On demand episodes (Cloudinary audio + Firestore "episodes") ── */
+const CLOUDINARY = { cloudName: 'va65d0ab', uploadPreset: 'wrl_songs' };
+const OD_LOCAL = new Set([...document.querySelectorAll('#odProg optgroup[label^="Local"] option')].map(o => o.value));
+let episodes = [], odFilter = 'live';
+$('odDate').value = new Date().toISOString().slice(0, 10);
+// usual presenter for each program — filled in automatically, can be changed
+const OD_PASTOR = { 'Sunday Service': 'Rev. Anthony Dalaka', 'Sunday Evening Service': 'Ps. Dr. Dian Warep', 'Belo-Taim Devotion': 'Evangelical Brotherhood Church Pastors',
+  'Story Bilong Mi': 'Sarah Kiap', 'Hope Behind Bars': 'Ps. Simon Kuman', 'Morning Light Devotion': 'Ps. John Wak', 'Night Light Devotion': 'Ps. Jack Kipoi' };
+$('odProg').onchange = () => { show('odOtherWrap', $('odProg').value === 'Other'); $('odPastor').value = OD_PASTOR[$('odProg').value] || ''; };
+$('odPastor').value = OD_PASTOR[$('odProg').value] || '';
+let odFileDur = null;
+const odClock = s => !s ? '' : (s >= 3600 ? Math.floor(s / 3600) + ':' + String(Math.floor(s % 3600 / 60)).padStart(2, '0') : Math.floor(s / 60)) + ':' + String(Math.round(s % 60)).padStart(2, '0');
+$('odFile').onchange = () => {
+  odFileDur = null; $('odDurHint').textContent = '';
+  const f = $('odFile').files[0]; if (!f) return;
+  const a = new Audio(); a.preload = 'metadata'; a.src = URL.createObjectURL(f);
+  a.onloadedmetadata = () => { if (isFinite(a.duration)) { odFileDur = Math.round(a.duration); $('odDurHint').textContent = 'Duration: ' + odClock(odFileDur); } URL.revokeObjectURL(a.src); };
+};
+async function loadEpisodes() {
+  try {
+    const snap = await getDocs(query(collection(db, 'episodes'), orderBy('createdAt', 'desc'), limit(300)));
+    episodes = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  } catch (e) { $('odList').innerHTML = '<div class="empty">Could not load episodes: ' + esc(e.code || e.message) + '</div>'; return; }
+  renderEpisodes();
+}
+function renderEpisodes() {
+  const now = Date.now();
+  const list = episodes.filter(x => (x.expiresAt && x.expiresAt.toMillis() > now) === (odFilter === 'live'))
+    .sort((a, b) => String(b.airDate || '').localeCompare(String(a.airDate || '')));
+  $('odList').innerHTML = list.length ? list.map(x => {
+    const ms = x.expiresAt ? x.expiresAt.toMillis() - now : 0, days = Math.ceil(ms / 86400000);
+    return `<div class="ep">
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><b>${esc(x.program)} — ${esc(x.title)}</b>
+        <span class="left ${ms <= 0 ? 'x' : ''}">${ms <= 0 ? 'Expired' : days <= 1 ? 'Last day' : days + ' days left'}</span></div>
+      <small class="muted">${x.pastor ? esc(x.pastor) + ' · ' : ''}${x.duration ? odClock(x.duration) + ' · ' : ''}Aired ${esc(x.airDate || '')} · uploaded ${fmt(x.createdAt)} by ${esc(x.uploadedBy || '')}</small>
+      <audio controls preload="none" src="${esc(x.url)}"></audio>
+      <div class="acts"><button class="btn btn-line rmv" data-epdel="${x.id}">${ms <= 0 ? 'Delete' : 'Take down now'}</button></div>
+    </div>`; }).join('') : `<div class="empty">${odFilter === 'live' ? 'No episodes online. Upload one on the right.' : 'No expired episodes.'}</div>`;
+}
+document.querySelectorAll('[data-odf]').forEach(b => b.onclick = () => {
+  odFilter = b.dataset.odf; document.querySelectorAll('[data-odf]').forEach(x => x.classList.toggle('on', x === b)); renderEpisodes();
+});
+$('odList').addEventListener('click', async e => {
+  const b = e.target.closest('[data-epdel]'); if (!b) return;
+  if (b.dataset.sure !== '1') { b.dataset.sure = '1'; b.textContent = 'Click again to confirm'; return; }
+  b.disabled = true; await deleteDoc(doc(db, 'episodes', b.dataset.epdel)); loadEpisodes();
+});
+$('odUpload').onclick = () => {
+  const msg = (t, ok) => { $('odMsg').textContent = t; $('odMsg').className = 'msg ' + (ok ? 'ok' : 'err'); };
+  const prog = $('odProg').value === 'Other' ? $('odOther').value.trim() : $('odProg').value;
+  const pastor = $('odPastor').value.trim();
+  const title = $('odTitle').value.trim(), date = $('odDate').value, file = $('odFile').files[0], days = +$('odDays').value;
+  if (!prog) return msg('Please type the program name.');
+  if (!title) return msg('Please give the episode a title.');
+  if (!pastor) return msg('Please enter the pastor or presenter.');
+  if (!date) return msg('Please choose the date it aired.');
+  if (!file) return msg('Please choose the audio file.');
+  if (file.size > 100 * 1048576) return msg(`That file is ${(file.size / 1048576).toFixed(0)} MB. Please export it as an MP3 under 100 MB (64–96 kbps is plenty for speech).`);
+  const btn = $('odUpload'); btn.disabled = true; btn.textContent = 'Uploading…'; show('odProgBox', true); $('odMsg').className = 'msg hide';
+  const fd = new FormData();
+  fd.append('file', file); fd.append('upload_preset', CLOUDINARY.uploadPreset); fd.append('tags', 'ondemand,ondemand-' + date.slice(0, 7));
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', `https://api.cloudinary.com/v1_1/${CLOUDINARY.cloudName}/video/upload`);
+  xhr.upload.onprogress = ev => { if (ev.lengthComputable) { const k = Math.round(ev.loaded / ev.total * 100); $('odBar').style.width = k + '%'; $('odPct').textContent = k < 100 ? k + '%' : 'Saving…'; } };
+  const done = () => { btn.disabled = false; btn.textContent = 'Upload episode'; show('odProgBox', false); $('odBar').style.width = '0'; };
+  xhr.onload = async () => {
+    let r = {}; try { r = JSON.parse(xhr.responseText); } catch (x) {}
+    if (xhr.status !== 200 || !r.secure_url) { done(); return msg('Upload failed' + (r.error ? ': ' + r.error.message : '') + '.'); }
+    try {
+      await addDoc(collection(db, 'episodes'), { program: prog, title, pastor, airDate: date, category: OD_LOCAL.has(prog) ? 'local' : 'international',
+        url: r.secure_url, publicId: r.public_id, duration: Math.round(r.duration || odFileDur || 0) || null, bytes: r.bytes || file.size,
+        createdAt: serverTimestamp(), expiresAt: Timestamp.fromMillis(Date.now() + days * 86400000), uploadedBy: auth.currentUser.email });
+      done(); msg(`Uploaded — "${title}" is now on the website for ${days} days.`, true);
+      $('odTitle').value = ''; $('odFile').value = ''; $('odDurHint').textContent = ''; odFileDur = null; loadEpisodes();
+    } catch (e) { done(); msg('The audio uploaded, but saving failed: ' + (e.code || e.message) + '. Have the latest Firestore rules been published?'); }
+  };
+  xhr.onerror = () => { done(); msg('Upload failed — check the internet connection and try again.'); };
+  xhr.send(fd);
+};
+</script>
+</body>
+</html>

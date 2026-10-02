@@ -1,0 +1,36 @@
+WANTOK RADIO LIGHT — SONG UPLOADS (free, no credit card)
+=======================================================
+Song files are stored on Cloudinary (free plan: 25 GB-credits a month,
+no credit card). The artist's details are saved in your Firebase
+project, and staff listen to the songs in the Newsroom → Songs tab.
+
+STEP 1 — Create a free Cloudinary account (5 minutes)
+  1. Go to https://cloudinary.com → Sign up for free.
+     Use the station's email (e.g. enquiry@wantokradio.org).
+  2. When asked what you'll use it for, any answer is fine.
+  3. On the Dashboard / Home page, find "Cloud name"
+     (a short word like  dxy12abc ). Write it down.
+
+STEP 2 — Create an upload preset (lets the website upload songs)
+  1. Click the gear icon (Settings) → "Upload" → "Upload presets"
+     → "Add Upload Preset".
+  2. Upload preset name:   wrl_songs
+  3. Signing mode:         Unsigned      <-- important
+  4. Asset folder:         wrl-songs
+  5. (Optional, recommended) Upload Control / Restrictions:
+       Allowed formats:    mp3, wav, m4a, aac, ogg
+       Max file size:      20 MB
+  6. Save.
+
+STEP 3 — Add them to the website
+  Put your Cloud name and preset name (wrl_songs) in the CLOUDINARY settings
+  in index.html and newsroom.html (already done: cloud name va65d0ab).
+
+STEP 4 — Update the Firebase rules
+  Firestore → Rules → paste firebase/firestore.rules → Publish.
+  (It adds the "songs" collection; everything else stays the same.)
+
+Where songs appear
+  - Newsroom → Songs tab: play each song, download it, and mark it
+    New / Shortlisted / On air / Not suitable.
+  - Cloudinary → Media Library → wrl-songs folder: all the files.

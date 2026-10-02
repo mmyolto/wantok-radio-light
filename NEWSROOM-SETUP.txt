@@ -1,0 +1,81 @@
+WANTOK RADIO LIGHT — NEWSROOM SETUP (one time, about 15 minutes)
+================================================================
+
+The Newsroom uses the same Firebase project as the Shareathon pledge
+form. Do these steps once in the Firebase Console:
+https://console.firebase.google.com/  →  open your Wantok Radio Light project
+
+1. TURN ON SIGN-IN
+   Build → Authentication → Get started → Sign-in method
+   → Email/Password → Enable → Save.
+
+2. ALLOW YOUR WEBSITE TO SIGN IN
+   Authentication → Settings → Authorized domains → Add domain
+   → type:  wantokradio.org   → Add.
+   (Also add www.wantokradio.org if your site uses it.)
+
+3. CREATE AN ACCOUNT FOR EACH REPORTER
+   Authentication → Users → Add user → their email + a password.
+   Give them the password privately. They can change it later with
+   "Forgot password?" on the Newsroom sign-in page.
+
+4. MARK THEM AS NEWSROOM EDITORS
+   Build → Firestore Database → Data → + Start collection
+   Collection ID:  editors
+   Document ID:    the reporter's email address, in lowercase
+                   (e.g. andy@wantokradio.org)
+   Add a field:    name (string) = the reporter's name → Save.
+   Repeat (Add document) for each reporter.
+   To remove someone's access later, delete their document here.
+
+5. UPDATE THE DATABASE RULES
+   Firestore Database → Rules → replace everything with the contents
+   of firebase/firestore.rules → Publish.
+   These keep your existing pledge rules exactly as they were and add
+   the news rules. Also copy this firestore.rules over the one in your
+   wantok-pledge-firebase folder, so a future "firebase deploy" from
+   there doesn't undo it.
+
+6. START USING IT
+   Upload the website (including newsroom.html) to your web host, then
+   go to:  https://wantokradio.org/newsroom.html
+   Sign in → press "Add the 3 starter stories" → edit them, add
+   photos, and publish.
+
+HOW REPORTERS USE THE NEWSROOM
+- "+ New story": headline, category (Testimonies, Church News,
+  Israel News, Awareness), date, reporter name, summary, full story,
+  optional photo and optional button (e.g. "Make a pledge").
+- Tick "Main feature" to put a story at the top of the News page.
+  Only one story can be the main feature; ticking a new one replaces
+  the old one automatically.
+- Untick "Published" to save a draft that the public can't see.
+- Photos are resized automatically so the page stays fast on mobile.
+- Changes appear on the News page as soon as visitors reload it.
+
+NEWSROOM TABS
+- Stories: write and publish news.
+- TokSaves & prayer: everything sent from the website's TokSave and
+  prayer-request pop-ups. A red number shows how many are new.
+  Press "Mark done" once it has been announced or prayed for.
+- Donations & totals: every gift started on the Support page, with its
+  reference number (e.g. WRL2610-ABCD). When that reference appears on
+  the Kina Bank statement, press "Mark received" — the gift is then
+  added to the totals shown on the Support page automatically. You can
+  also type the totals and a goal yourself and press "Save totals".
+
+KINA BANK ONLINE PAYMENTS (when ready)
+Ask Kina Bank to set Wantok Radio Light up on their Internet Payment
+Gateway (IPG). When they give you your merchant payment page details,
+send them to your web developer to switch on card/online payments on
+the Support page (the setting is KINA_PAY in index.html). Never put a
+secret key or password from Kina Bank into the website files.
+
+TWO STAFF PAGES (separate logins by role)
+- newsroom.html  — journalists: Stories, TokSaves & prayer.
+- admin.html     — admin staff only: Pledges (live) and Donations & totals.
+In Firestore → editors → (the person's email document), add a field:
+    role = admin        → can use admin.html (and the Newsroom)
+    role = journalist   → Newsroom only (no pledges or donations)
+Journalists are blocked from pledge and donation data by the database
+rules themselves, not just hidden on screen.

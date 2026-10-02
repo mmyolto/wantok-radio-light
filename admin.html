@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Staff Admin — Wantok Radio Light</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#0f1b2d;--gold:#e8a93b;--gold-soft:#f6e3bd;--cream:#fbf8f2;--paper:#fff;--text:#1d2533;--muted:#5b6474;--line:#e7e1d6;--red:#b5402c;--green:#1f7a3f}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,system-ui,sans-serif;background:var(--cream);color:var(--text);line-height:1.55;font-size:16px}
+  h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;color:var(--ink);line-height:1.2}
+  button,input,select,textarea{font:inherit}
+  .top{background:var(--ink);color:#fff;padding:0 24px}
+  .top .in{max-width:1180px;margin:0 auto;height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:Fraunces,serif;font-size:1.15rem}
+  .brand small{display:block;font-family:Inter,sans-serif;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft)}
+  .who{display:flex;align-items:center;gap:12px;font-size:.9rem;color:rgba(255,255,255,.75)}
+  .btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:.7rem 1.2rem;font-weight:600;cursor:pointer;font-size:.92rem}
+  .btn-gold{background:var(--gold);color:var(--ink)}
+  .btn-dark{background:var(--ink);color:#fff}
+  .btn-line{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+  .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.3)}
+  .btn-danger{background:#fbeae7;color:var(--red)}
+  .btn:disabled{opacity:.55;cursor:default}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 80px}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:28px}
+  .login{max-width:420px;margin:70px auto}
+  .login h1{font-size:1.8rem;margin-bottom:6px}
+  .muted{color:var(--muted)}
+  label{display:grid;gap:6px;font-size:.85rem;font-weight:600;color:var(--ink)}
+  input,select,textarea{width:100%;padding:.75rem .9rem;border:1px solid var(--line);border-radius:12px;background:var(--cream);color:var(--text);font-size:1rem;font-weight:400}
+  textarea{resize:vertical;min-height:120px}
+  input:focus,select:focus,textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:transparent}
+  .stack{display:grid;gap:16px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .msg{padding:.8rem 1rem;border-radius:12px;font-size:.92rem}
+  .msg.err{background:#fbeae7;color:var(--red)}
+  .msg.ok{background:#e3f3e8;color:var(--green)}
+  .hide{display:none!important}
+  .layout{display:grid;grid-template-columns:380px 1fr;gap:24px;align-items:start}
+  .list{display:grid;gap:10px;max-height:calc(100vh - 220px);overflow:auto;padding-right:4px}
+  .item{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--paper);cursor:pointer;text-align:left}
+  .item:hover,.item.on{border-color:var(--gold);box-shadow:0 0 0 3px rgba(232,169,59,.2)}
+  .thumb{width:64px;height:48px;border-radius:8px;background:linear-gradient(160deg,#1d3355,var(--ink));object-fit:cover;display:block}
+  .item b{display:block;font-size:.92rem;color:var(--ink);line-height:1.3}
+  .tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+  .tag{font-size:.68rem;font-weight:600;letter-spacing:.04em;padding:.12rem .5rem;border-radius:999px;background:#eef1f5;color:#455066}
+  .tag.f{background:var(--gold-soft);color:#6b4a0e}
+  .tag.d{background:#fbeae7;color:var(--red)}
+  .tag.p{background:#e3f3e8;color:var(--green)}
+  .head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .photo{display:grid;grid-template-columns:200px 1fr;gap:16px;align-items:center}
+  .photo .prev{width:200px;aspect-ratio:16/10;border-radius:12px;background:linear-gradient(160deg,#1d3355,var(--ink));object-fit:cover;display:block;border:1px solid var(--line)}
+  .checks{display:flex;flex-wrap:wrap;gap:22px}
+  .check{display:flex;align-items:center;gap:10px;font-weight:500;font-size:.95rem}
+  .check input{width:20px;height:20px;accent-color:var(--gold)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:18px}
+  .hint{font-size:.8rem;color:var(--muted);font-weight:400}
+  .empty{padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:14px}
+  .ntabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid var(--line)}
+  .ntabs button{border:0;background:none;padding:.8rem 1.1rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:8px}
+  .ntabs button.on{color:var(--ink);border-color:var(--gold)}
+  .badge{background:var(--red);color:#fff;font-size:.72rem;border-radius:999px;padding:.1rem .45rem}
+  .seg{display:inline-flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
+  .seg button{border:0;background:none;padding:.4rem .9rem;border-radius:999px;font-weight:600;font-size:.85rem;color:var(--muted);cursor:pointer}
+  .seg button.on{background:var(--ink);color:#fff}
+  .rqi{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 20px;display:grid;gap:8px}
+  .rqi .top2{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+  .rqi p{white-space:pre-wrap}
+  .rqi small{color:var(--muted)}
+  .tag.t{background:#e8edf5;color:#34507a}
+  .tag.pr{background:#f3ece0;color:#7a5a1c}
+  .dn{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 18px}
+  .dn b{font-family:Fraunces,serif;font-size:1.2rem;color:var(--ink)}
+  .dn small{display:block;color:var(--muted)}
+  @media (max-width:900px){.layout[style]{grid-template-columns:1fr!important}}
+  .live{color:#1f7a3f;font-size:.72rem;font-weight:700;letter-spacing:.08em}
+  .pstats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+  .pstats div{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:14px 16px}
+  .pstats small{display:block;color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+  .pstats b{font-family:Fraunces,serif;font-size:1.6rem;color:var(--ink)}
+  .pgrid{display:grid;grid-template-columns:1fr 280px;gap:16px;align-items:start}
+  .ptable{width:100%;border-collapse:collapse;font-size:.88rem}
+  .ptable th{position:sticky;top:0;background:var(--ink);color:#fff;text-align:left;padding:10px 12px;font-weight:600;white-space:nowrap}
+  .ptable td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+  .ptable tr.new td{animation:flash 2.5s ease}
+  @keyframes flash{0%{background:var(--gold-soft)}100%{background:transparent}}
+  .ptable td.num{text-align:right;white-space:nowrap;font-weight:600}
+  .prov{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+  @media (max-width:900px){.pstats{grid-template-columns:1fr 1fr}.pgrid{grid-template-columns:1fr}}
+  @media (max-width:900px){.layout{grid-template-columns:1fr}.list{max-height:none}.row,.photo{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><div class="in">
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="18" fill="#e8a93b"/><circle cx="19" cy="21" r="4" fill="#0f1b2d"/><path d="M11 14a11 11 0 0 1 16 0M14 17a7 7 0 0 1 10 0" stroke="#0f1b2d" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+    <span>Wantok Radio Light<small>Staff Admin</small></span>
+  </div>
+  <div class="who hide" id="who"><span id="whoEmail"></span><button class="btn btn-ghost" id="logout">Sign out</button></div>
+</div></div>
+
+<!-- Sign in -->
+<div class="wrap" id="vLogin">
+  <div class="card login stack">
+    <div><h1>Staff admin sign in</h1><p class="muted">Pledges and donations — for Wantok Radio Light admin staff only.</p></div>
+    <label>Email<input type="email" id="email" autocomplete="username"></label>
+    <label>Password<input type="password" id="pass" autocomplete="current-password"></label>
+    <div id="loginMsg" class="msg err hide"></div>
+    <button class="btn btn-gold" id="loginBtn" style="justify-content:center">Sign in</button>
+    <button class="btn btn-line" id="resetBtn" style="justify-content:center">Forgot password?</button>
+  </div>
+</div>
+
+<!-- Newsroom -->
+<div class="wrap hide" id="vApp">
+  <nav class="ntabs"><button class="on" data-tab="pledges">Pledges <span class="live hide" id="pLive">● LIVE</span></button><button data-tab="giving">Donations &amp; totals</button></nav>
+  <div data-panel="pledges">
+    <div class="head"><h2>Shareathon pledges</h2>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><input id="pSearch" placeholder="Search name, church, province, pledge no." style="width:300px"><button class="btn btn-line" id="pCsv">Download Excel (CSV)</button></div></div>
+    <div class="pstats">
+      <div><small>Pledges</small><b id="pCount">0</b></div>
+      <div><small>Total pledged (Kina)</small><b id="pTotal">K0</b></div>
+      <div><small>Paid with pledge (Kina)</small><b id="pPaid">K0</b></div>
+      <div><small>Latest</small><b id="pLatest">—</b></div>
+    </div>
+    <div class="pgrid">
+      <div class="card" style="padding:0;overflow:auto">
+        <table class="ptable"><thead><tr><th>No.</th><th>Name</th><th>Category</th><th>Location</th><th>Church</th><th>Pledge</th><th>Paid now</th><th>Schedule</th><th>Contact</th><th>Date</th></tr></thead><tbody id="pRows"></tbody></table>
+      </div>
+      <div class="card"><h3 style="font-size:1.1rem;margin-bottom:10px">By province / country</h3><div id="pProv"></div></div>
+    </div>
+    <p class="muted" id="pNote" style="font-size:.85rem;margin-top:10px">New pledges appear here instantly as people submit the form.</p>
+  </div>
+
+  <div data-panel="giving" class="hide">
+    <div class="layout" style="grid-template-columns:360px 1fr">
+      <div class="card stack">
+        <h2>Giving totals</h2>
+        <p class="muted" style="font-size:.9rem">Shown at the top of the Support page. Marking a donation as received below adds it here automatically.</p>
+        <label>People who have given<input type="number" id="tGivers" min="0"></label>
+        <label>Total given (Kina)<input type="number" id="tAmount" min="0"></label>
+        <label>Goal (Kina) <span class="hint">Optional — shows a progress bar</span><input type="number" id="tGoal" min="0"></label>
+        <div id="tMsg" class="msg hide"></div>
+        <button class="btn btn-gold" id="tSave" style="justify-content:center">Save totals</button>
+      </div>
+      <div>
+        <div class="head"><h2>Online donations</h2>
+          <div class="seg"><button class="on" data-dnf="started">Waiting</button><button data-dnf="received">Received</button><button data-dnf="all">All</button></div></div>
+        <p class="muted" style="font-size:.9rem;margin:-6px 0 14px">When a gift with this reference reaches the Kina Bank account, press "Mark received".</p>
+        <div class="stack" id="dnList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Not an editor -->
+<div class="wrap hide" id="vDenied">
+  <div class="card login stack">
+    <h1>Admin staff only</h1>
+    <p class="muted">You're signed in, but this account doesn't have admin access. Pledges and donations are only available to admin staff.</p>
+    <div class="msg err" id="deniedWhy" style="font-size:.88rem;line-height:1.5"></div>
+    <button class="btn btn-line" id="logout2">Sign out</button>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, deleteDoc, updateDoc, writeBatch, serverTimestamp, increment, query, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+/* ── Firebase project (same as the Shareathon pledge form) ── */
+const firebaseConfig = {
+  apiKey: "AIzaSyBuNp4RqyJlhmcH5jpGhWRDLJEEgErCl6Y",
+  authDomain: "wantok-radio-light-81519.firebaseapp.com",
+  projectId: "wantok-radio-light-81519",
+  storageBucket: "wantok-radio-light-81519.firebasestorage.app",
+  messagingSenderId: "953977170930",
+  appId: "1:953977170930:web:2ba5970733622a49b9996b"
+};
+const CATEGORIES = ["Testimonies", "Church News", "Israel News", "Awareness"];
+/* Starter stories — same as on the News page */
+const STARTERS = [{"id":"shareathon-2026","title":"Share-a-thon 2026: help us reach the unreached","category":"Church News","date":"2026-10-01","author":"Wantok Radio Light","featured":true,"published":true,"summary":"Our yearly Share-a-thon fundraising drive is here. Every pledge helps keep the gospel on air across Papua New Guinea.","body":"Share-a-thon is Wantok Radio Light's yearly fundraising drive, and it is how this ministry stays on air.\n\nYour giving keeps our studio in Gerehu running, carries our signal by satellite to our FM sites around the nation, and helps us build for the future, including the new Wantok Radio Light Studio Building.\n\nYou can make your Share-a-thon 2026 pledge online using our Shareathon Pledge Form. You will receive a pledge number and a receipt straight away. You can also call the office on (675) 326 0946 or visit us at Gerehu Stage 2, Sivari Road.\n\nThank you for your continued support. We are still on air today as a testimony of your giving.","linkText":"Make a pledge","linkUrl":"#/pledge"},{"id":"new-fm-site-nuku","title":"New FM site: Wantok Radio Light now on air in Nuku","category":"Church News","date":"2026-09-30","author":"Wantok Radio Light","featured":false,"published":true,"summary":"Listeners in Nuku, Sandaun Province, can now tune in to Wantok Radio Light on FM.","body":"Wantok Radio Light is now broadcasting on FM in Nuku, Sandaun Province.\n\nNuku joins our growing network of FM sites across Papua New Guinea. Our signal starts at the studio in Gerehu and reaches each site via satellite, bringing Christian programming, prayer and teaching to communities right where they are.\n\nWe thank God, and every partner and Share-a-thon giver who made this possible.","linkText":"See our coverage map","linkUrl":"#/coverage"},{"id":"prison-ministry-14-graduates","title":"14 graduates as Wantok Radio Light works with the prison","category":"Testimonies","date":"2026-09-29","author":"Wantok Radio Light","featured":false,"published":true,"summary":"Our work with the prison has celebrated 14 graduates.","body":"Wantok Radio Light has been working with the prison, and we are celebrating 14 graduates.\n\nOur prison ministry program, Hope Behind Bars with Ps. Simon Kuman, airs on Thursdays and Saturdays from 9:00 to 10:00am, bringing the hope of the gospel to those behind bars.\n\nPlease keep the graduates, their families and our prison ministry team in your prayers.","linkText":"","linkUrl":""}];
+
+if (String(firebaseConfig.apiKey).startsWith('PASTE')) { document.getElementById('loginMsg').textContent = 'The Newsroom is not connected to the database yet.'; document.getElementById('loginMsg').classList.remove('hide'); }
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+const show = (id, on) => $(id).classList.toggle('hide', !on);
+
+
+let stories = [], current = null, photoFull = null, photoThumb = null, photoChanged = false;
+
+/* ── Sign in / out ── */
+$('loginBtn').onclick = async () => {
+  show('loginMsg', false);
+  try { await signInWithEmailAndPassword(auth, $('email').value.trim(), $('pass').value); }
+  catch (e) { $('loginMsg').textContent = 'Sign in failed. Check your email and password.'; show('loginMsg', true); }
+};
+$('pass').addEventListener('keydown', e => { if (e.key === 'Enter') $('loginBtn').click(); });
+$('resetBtn').onclick = async () => {
+  const em = $('email').value.trim();
+  if (!em) { $('loginMsg').textContent = 'Type your email address first, then press "Forgot password?".'; show('loginMsg', true); return; }
+  try { await sendPasswordResetEmail(auth, em); $('loginMsg').textContent = 'A password reset email has been sent.'; $('loginMsg').className = 'msg ok'; }
+  catch (e) { $('loginMsg').textContent = 'Could not send the reset email.'; $('loginMsg').className = 'msg err'; }
+};
+$('logout').onclick = $('logout2').onclick = () => signOut(auth);
+
+onAuthStateChanged(auth, async user => {
+  show('who', !!user); show('vLogin', !user); show('vApp', false); show('vDenied', false);
+  if (!user) return;
+  $('whoEmail').textContent = user.email;
+  const em = (user.email || '').trim().toLowerCase();
+  let ok = false, why = '';
+  try {
+    const d = await getDoc(doc(db, 'editors', em));
+    ok = d.exists() && d.data().role === 'admin';
+    if (!d.exists()) why = `No staff entry found for "${em}". In Firestore → editors, add a document with ID ${em} and a field role = admin.`;
+    else if (!ok) why = `"${em}" is a newsroom account but not an admin. To give admin access, open Firestore → editors → ${em} and add a field  role = admin  (string).`;
+  } catch (e) {
+    why = e.code === 'permission-denied'
+      ? `The database refused the check (permission-denied). The latest security rules are probably not published yet: Firestore → Rules → paste the rules → Publish. (Signed in as ${em}.)`
+      : `Could not reach the database (${e.code || e.message}). Check your internet connection, or open newsroom.html from your computer instead of the preview. (Signed in as ${em}.)`;
+  }
+  if (!ok) { $('deniedWhy').textContent = why; show('vDenied', true); return; }
+  show('vApp', true);
+  watchPledges(); loadGiving();
+});
+
+/* ── Tabs ── */
+document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hide', p.dataset.panel !== b.dataset.tab));
+  if (b.dataset.tab === 'giving') loadGiving();
+});
+const fmt = ts => ts && ts.toDate ? ts.toDate().toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+
+/* ── Giving totals & online donations ── */
+let donations = [], dnFilter = 'started';
+async function loadGiving() {
+  const t = await getDoc(doc(db, 'stats', 'giving'));
+  const g = t.exists() ? t.data() : {};
+  $('tGivers').value = g.givers ?? ''; $('tAmount').value = g.amount ?? ''; $('tGoal').value = g.goal ?? '';
+  const snap = await getDocs(query(collection(db, 'donations'), orderBy('createdAt', 'desc'), limit(300)));
+  donations = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+  renderDonations();
+}
+function renderDonations() {
+  const list = donations.filter(d => dnFilter === 'all' || d.status === dnFilter);
+  $('dnList').innerHTML = list.length ? list.map(d => `
+    <div class="dn"><div><b>K${Number(d.amount).toLocaleString()}</b> ${d.frequency === 'Monthly' ? '<span class="tag">Monthly</span>' : ''} ${d.status === 'received' ? '<span class="tag p">Received</span>' : '<span class="tag d">Waiting</span>'}
+      <small>Ref <b style="font-size:.95rem">${esc(d.ref)}</b> · ${esc(d.name)}${d.anonymous ? ' (anonymous)' : ''} · ${esc(d.contact)} · ${fmt(d.createdAt)}</small></div>
+      ${d.status === 'received' ? '' : `<button class="btn btn-gold" data-recv="${d.id}">Mark received</button>`}</div>`).join('') : '<div class="empty">Nothing here.</div>';
+  $('dnList').querySelectorAll('[data-recv]').forEach(b => b.onclick = async () => {
+    const d = donations.find(x => x.id === b.dataset.recv); if (!d || !confirm(`Mark K${d.amount} from ${d.name} (ref ${d.ref}) as received?`)) return;
+    const batch = writeBatch(db);
+    batch.update(doc(db, 'donations', d.id), { status: 'received', receivedAt: serverTimestamp(), receivedBy: auth.currentUser.email });
+    batch.set(doc(db, 'stats', 'giving'), { givers: increment(1), amount: increment(Number(d.amount) || 0), updatedAt: serverTimestamp() }, { merge: true });
+    await batch.commit(); loadGiving();
+  });
+}
+document.querySelectorAll('[data-dnf]').forEach(b => b.onclick = () => {
+  dnFilter = b.dataset.dnf; document.querySelectorAll('[data-dnf]').forEach(x => x.classList.toggle('on', x === b)); renderDonations();
+});
+$('tSave').onclick = async () => {
+  try {
+    await setDoc(doc(db, 'stats', 'giving'), { givers: Number($('tGivers').value) || 0, amount: Number($('tAmount').value) || 0, goal: Number($('tGoal').value) || 0, updatedAt: serverTimestamp() }, { merge: true });
+    $('tMsg').textContent = 'Totals saved. They now show on the Support page.'; $('tMsg').className = 'msg ok';
+  } catch (e) { $('tMsg').textContent = 'Could not save the totals.'; $('tMsg').className = 'msg err'; }
+};
+
+/* ── Shareathon pledges: LIVE ── */
+let pledges = [], pSeen = null, pUnsub = null;
+function watchPledges() {
+  if (pUnsub) return;
+  pUnsub = onSnapshot(query(collection(db, 'pledges'), orderBy('seq', 'desc')), snap => {
+    const ids = new Set(snap.docs.map(d => d.id));
+    const fresh = pSeen ? [...ids].filter(id => !pSeen.has(id)) : [];
+    pSeen = ids;
+    pledges = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    show('pLive', true);
+    renderPledges(fresh);
+  }, err => {
+    show('pLive', false);
+    $('pNote').textContent = err.code === 'permission-denied'
+      ? 'Pledges are locked. Publish the updated database rules (firebase/firestore.rules) so newsroom editors can view them.'
+      : 'Could not load pledges: ' + (err.message || err);
+  });
+}
+const money = n => Number(n || 0).toLocaleString('en-US', { maximumFractionDigits: 2 });
+const esc = t => String(t ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const locOf = p => p.location === 'Overseas' ? [p.osLocation, p.country].filter(Boolean).join(', ') : [p.city, p.province].filter(Boolean).join(', ');
+function renderPledges(fresh = []) {
+  const q = $('pSearch').value.trim().toLowerCase();
+  const list = pledges.filter(p => !q || [p.pledgeNo, p.name, p.church, p.congregation, p.province, p.country, p.city, p.category].join(' ').toLowerCase().includes(q));
+  const kina = pledges.filter(p => (p.currency || 'K') === 'K');
+  $('pCount').textContent = pledges.length.toLocaleString();
+  $('pTotal').textContent = 'K' + money(kina.reduce((a, p) => a + (+p.pledge || 0), 0));
+  $('pPaid').textContent = 'K' + money(kina.reduce((a, p) => a + (+p.amount || 0), 0));
+  $('pLatest').textContent = pledges[0] ? pledges[0].pledgeNo.replace('WRL26 - ', '#') : '—';
+  $('pRows').innerHTML = list.map(p => `<tr class="${fresh.includes(p.id) ? 'new' : ''}">
+    <td>${esc(p.pledgeNo)}</td><td><b>${esc(p.name)}</b></td><td>${esc(p.category)}</td><td>${esc(locOf(p))}</td>
+    <td>${esc([p.church, p.congregation].filter(Boolean).join(' · '))}</td>
+    <td class="num">${esc(p.currency || 'K')} ${money(p.pledge)}</td><td class="num">${p.amount ? esc(p.currency || 'K') + ' ' + money(p.amount) : '—'}</td>
+    <td>${esc(p.schedule)}</td><td>${esc([p.mobile, p.email].filter(Boolean).join(' · '))}</td><td>${esc(p.date)}</td></tr>`).join('')
+    || '<tr><td colspan="10" class="muted" style="padding:20px">No pledges yet.</td></tr>';
+  const byProv = {};
+  pledges.forEach(p => { const k = p.location === 'Overseas' ? (p.country || 'Overseas') : (p.province || 'PNG'); byProv[k] = (byProv[k] || { n: 0, k: 0 }); byProv[k].n++; if ((p.currency || 'K') === 'K') byProv[k].k += +p.pledge || 0; });
+  $('pProv').innerHTML = Object.entries(byProv).sort((a, b) => b[1].k - a[1].k).map(([k, v]) => `<div class="prov"><span>${esc(k)} <small class="muted">(${v.n})</small></span><b>K${money(v.k)}</b></div>`).join('') || '<p class="muted">—</p>';
+}
+$('pSearch').addEventListener('input', () => renderPledges());
+$('pCsv').onclick = () => {
+  const cols = ['pledgeNo','name','category','address','location','city','province','country','osLocation','email','mobile','church','congregation','currency','pledge','schedule','more','amount','method','sign','date'];
+  const csv = [cols.join(',')].concat(pledges.slice().reverse().map(p => cols.map(c => '"' + String(p[c] ?? '').replace(/"/g, '""') + '"').join(','))).join('\r\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' }));
+  a.download = 'shareathon-pledges-' + new Date().toISOString().slice(0, 10) + '.csv'; a.click();
+};
+</script>
+</body>
+</html>

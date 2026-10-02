@@ -1,0 +1,119 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Shared counter that hands out the next sequential pledge number.
+    // Public can read it (to preview "next number") and can only ever
+    // bump it by exactly 1 — never skip, reset, or add other fields.
+    match /counters/pledges {
+      allow read: if true;
+      allow create: if request.resource.data.seq == 1
+                    && request.resource.data.keys().hasOnly(['seq']);
+      allow update: if request.resource.data.seq == resource.data.seq + 1
+                    && request.resource.data.keys().hasOnly(['seq']);
+      allow delete: if false;
+    }
+
+    // Pledge submissions. Public can CREATE a new pledge (the form's
+    // Submit button) but can never read, edit, or delete pledges —
+    // that protects every donor's data from other site visitors.
+    // Staff view all pledges in the Firebase Console → Firestore Data
+    // tab, which uses your Firebase project login, not these rules.
+    match /pledges/{pledgeId} {
+      allow create: if request.resource.data.keys().hasAll(
+                        ['seq','pledgeNo','name','pledge','createdAt'])
+                    && request.resource.data.pledge is number
+                    && request.resource.data.pledge > 0
+                    && request.resource.data.seq is number;
+      allow read: if isAdmin();    // admin staff see pledges live (admin.html)
+      allow update, delete: if false;
+    }
+
+    // ── NEWSROOM ────────────────────────────────────────────────
+    // A reporter/editor is anyone signed in whose email address has a
+    // document in the "editors" collection (added by the administrator
+    // in Firebase Console → Firestore → editors → document ID = email).
+    function isEditor() {
+      return request.auth != null
+          && request.auth.token.email != null
+          && exists(/databases/$(database)/documents/editors/$(request.auth.token.email.lower()));
+    }
+
+    // ADMIN STAFF: an editor whose document has the field  role = "admin".
+    // Only admins can see pledges and donations or change the giving totals.
+    function isAdmin() {
+      return isEditor()
+          && get(/databases/$(database)/documents/editors/$(request.auth.token.email.lower())).data.get('role', '') == 'admin';
+    }
+
+    // News stories: the public can read published stories only.
+    // Editors can read drafts and create, edit and delete stories.
+    match /news/{storyId} {
+      allow read: if resource.data.published == true || isEditor();
+      allow create, update, delete: if isEditor();
+    }
+
+    // Full-size story photos (kept separate so the News page loads fast).
+    match /newsImages/{storyId} {
+      allow read: if true;
+      allow create, update, delete: if isEditor();
+    }
+
+    // Editors list: each person can only check their own entry.
+    // Only the administrator adds or removes editors (in the Console).
+    match /editors/{email} {
+      allow read: if request.auth != null && request.auth.token.email.lower() == email;
+      allow write: if false;
+    }
+
+    // TokSaves & prayer requests from the website pop-up.
+    // Public can only SEND one; editors read them in the Newsroom.
+    match /requests/{id} {
+      allow create: if request.resource.data.type in ['toksave', 'prayer', 'ondemand']
+                    && request.resource.data.status == 'new'
+                    && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size() < 120
+                    && request.resource.data.message is string && request.resource.data.message.size() > 0 && request.resource.data.message.size() < 4000;
+      allow read, update, delete: if isEditor();
+    }
+
+    // Online donations started on the Support page (with their reference).
+    // Public can only create one; editors mark them received.
+    match /donations/{id} {
+      allow create: if request.resource.data.amount is number
+                    && request.resource.data.amount > 0
+                    && request.resource.data.status == 'started'
+                    && request.resource.data.ref is string;
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Giving totals shown on the Support page.
+    match /stats/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Song submissions from the website (file stored on Cloudinary).
+    // Public can only SEND one; editors listen and set the status.
+    // On demand episodes: anyone can listen; only newsroom editors upload or remove.
+    match /episodes/{id} {
+      allow read: if true;
+      allow create, update: if isEditor()
+                    && request.resource.data.url is string && request.resource.data.url.matches('https://res[.]cloudinary[.]com/.*')
+                    && request.resource.data.expiresAt is timestamp;
+      allow delete: if isEditor();
+    }
+
+    match /songs/{id} {
+      allow create: if request.resource.data.status == 'new'
+                    && request.resource.data.artist is string && request.resource.data.artist.size() > 0 && request.resource.data.artist.size() < 150
+                    && request.resource.data.title is string && request.resource.data.title.size() > 0 && request.resource.data.title.size() < 150
+                    && request.resource.data.url is string && request.resource.data.url.matches('https://res[.]cloudinary[.]com/.*');
+      allow read, update, delete: if isEditor();
+    }
+
+    // Deny everything else by default.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
