@@ -64,6 +64,9 @@
   .ntabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:24px;border-bottom:1px solid var(--line)}
   .ntabs button{border:0;background:none;padding:.8rem 1.1rem;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1px;display:flex;align-items:center;gap:8px}
   .ntabs button.on{color:var(--ink);border-color:var(--gold)}
+  .ntab-link{margin-left:auto;align-self:center;padding:.55rem 1rem;border-radius:999px;background:var(--gold);color:var(--ink);font-weight:700;text-decoration:none;font-size:.92rem}
+  .ntab-link:hover{filter:brightness(1.05)}
+  @media (max-width:640px){.ntab-link{margin:6px 0 10px;width:100%;text-align:center}}
   .badge{background:var(--red);color:#fff;font-size:.72rem;border-radius:999px;padding:.1rem .45rem}
   .seg{display:inline-flex;gap:4px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px}
   .seg button{border:0;background:none;padding:.4rem .9rem;border-radius:999px;font-weight:600;font-size:.85rem;color:var(--muted);cursor:pointer}
@@ -132,7 +135,7 @@
 
 <!-- Newsroom -->
 <div class="wrap hide" id="vApp">
-  <nav class="ntabs"><button class="on" data-tab="stories">Stories</button><button data-tab="requests">Requests <span class="badge hide" id="rqCount"></span></button><button data-tab="songs">Songs <span class="badge hide" id="sgCount"></span></button><button data-tab="ondemand">On demand</button></nav>
+  <nav class="ntabs"><button class="on" data-tab="stories">Stories</button><button data-tab="requests">Requests <span class="badge hide" id="rqCount"></span></button><button data-tab="songs">Songs <span class="badge hide" id="sgCount"></span></button><button data-tab="ondemand">On demand</button><a class="ntab-link hide" id="adminLink" href="admin.html">Pledges &amp; donations <span aria-hidden="true">&rarr;</span></a></nav>
   <div class="layout" data-panel="stories">
     <div>
       <div class="head"><h2>Stories</h2><button class="btn btn-gold" id="newBtn">+ New story</button></div>
@@ -235,7 +238,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebas
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
 import { getFirestore, collection, doc, getDoc, getDocs, setDoc, addDoc, deleteDoc, updateDoc, writeBatch, serverTimestamp, increment, query, orderBy, limit, onSnapshot, Timestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
-/* ── Firebase project (same as the Shareathon pledge form) ── */
+// Firebase project (same as the Shareathon pledge form)
 const firebaseConfig = {
   apiKey: "AIzaSyBuNp4RqyJlhmcH5jpGhWRDLJEEgErCl6Y",
   authDomain: "wantok-radio-light-81519.firebaseapp.com",
@@ -245,7 +248,7 @@ const firebaseConfig = {
   appId: "1:953977170930:web:2ba5970733622a49b9996b"
 };
 const CATEGORIES = ["Testimonies", "Church News", "Israel News", "Awareness"];
-/* Starter stories — same as on the News page */
+// Starter stories (same as on the News page)
 const STARTERS = [{"id":"shareathon-2026","title":"Share-a-thon 2026: help us reach the unreached","category":"Church News","date":"2026-10-01","author":"Wantok Radio Light","featured":true,"published":true,"summary":"Our yearly Share-a-thon fundraising drive is here. Every pledge helps keep the gospel on air across Papua New Guinea.","body":"Share-a-thon is Wantok Radio Light's yearly fundraising drive, and it is how this ministry stays on air.\n\nYour giving keeps our studio in Gerehu running, carries our signal by satellite to our FM sites around the nation, and helps us build for the future, including the new Wantok Radio Light Studio Building.\n\nYou can make your Share-a-thon 2026 pledge online using our Shareathon Pledge Form. You will receive a pledge number and a receipt straight away. You can also call the office on (675) 326 0946 or visit us at Gerehu Stage 2, Sivari Road.\n\nThank you for your continued support. We are still on air today as a testimony of your giving.","linkText":"Make a pledge","linkUrl":"#/pledge"},{"id":"new-fm-site-nuku","title":"New FM site: Wantok Radio Light now on air in Nuku","category":"Church News","date":"2026-09-30","author":"Wantok Radio Light","featured":false,"published":true,"summary":"Listeners in Nuku, Sandaun Province, can now tune in to Wantok Radio Light on FM.","body":"Wantok Radio Light is now broadcasting on FM in Nuku, Sandaun Province.\n\nNuku joins our growing network of FM sites across Papua New Guinea. Our signal starts at the studio in Gerehu and reaches each site via satellite, bringing Christian programming, prayer and teaching to communities right where they are.\n\nWe thank God, and every partner and Share-a-thon giver who made this possible.","linkText":"See our coverage map","linkUrl":"#/coverage"},{"id":"prison-ministry-14-graduates","title":"14 graduates as Wantok Radio Light works with the prison","category":"Testimonies","date":"2026-09-29","author":"Wantok Radio Light","featured":false,"published":true,"summary":"Our work with the prison has celebrated 14 graduates.","body":"Wantok Radio Light has been working with the prison, and we are celebrating 14 graduates.\n\nOur prison ministry program, Hope Behind Bars with Ps. Simon Kuman, airs on Thursdays and Saturdays from 9:00 to 10:00am, bringing the hope of the gospel to those behind bars.\n\nPlease keep the graduates, their families and our prison ministry team in your prayers.","linkText":"","linkUrl":""}];
 
 if (String(firebaseConfig.apiKey).startsWith('PASTE')) { document.getElementById('loginMsg').textContent = 'The Newsroom is not connected to the database yet.'; document.getElementById('loginMsg').classList.remove('hide'); }
@@ -259,7 +262,7 @@ CATEGORIES.forEach(c => $('fCat').insertAdjacentHTML('beforeend', `<option>${c}<
 
 let stories = [], current = null, photoFull = null, photoThumb = null, photoChanged = false;
 
-/* ── Sign in / out ── */
+// Sign in / out
 $('loginBtn').onclick = async () => {
   show('loginMsg', false);
   try { await signInWithEmailAndPassword(auth, $('email').value.trim(), $('pass').value); }
@@ -279,10 +282,11 @@ onAuthStateChanged(auth, async user => {
   if (!user) return;
   $('whoEmail').textContent = user.email;
   const em = (user.email || '').trim().toLowerCase();
-  let ok = false, why = '';
+  let ok = false, why = '', isAdmin = false;
   try {
     const d = await getDoc(doc(db, 'editors', em));
     ok = d.exists();
+    isAdmin = ok && d.data().role === 'admin';
     if (!ok) why = `Checked the editors list for "${em}" — no matching document. In Firestore → editors, the Document ID must be exactly: ${em}`;
   } catch (e) {
     why = e.code === 'permission-denied'
@@ -291,12 +295,13 @@ onAuthStateChanged(auth, async user => {
   }
   if (!ok) { $('deniedWhy').textContent = why; show('vDenied', true); return; }
   show('vApp', true);
+  show('adminLink', isAdmin);
   await loadStories();
   newStory();
   loadRequests(); loadSongs();
 });
 
-/* ── Stories list ── */
+// Stories list
 async function loadStories() {
   const snap = await getDocs(collection(db, 'news'));
   stories = snap.docs.map(d => ({ id: d.id, ...d.data() })).sort((a, b) => (b.date || '').localeCompare(a.date || ''));
@@ -315,7 +320,7 @@ function renderList() {
 }
 const esc = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
-/* ── Form ── */
+// Form
 function fill(s) {
   $('fTitle').value = s.title || ''; $('fCat').value = s.category || CATEGORIES[0];
   $('fDate').value = s.date || new Date().toISOString().slice(0, 10); $('fAuthor').value = s.author || '';
@@ -330,7 +335,7 @@ function newStory() { current = null; $('formTitle').textContent = 'New story'; 
 function editStory(s) { current = s; $('formTitle').textContent = 'Edit story'; show('delBtn', true); fill(s); renderList(); }
 $('newBtn').onclick = newStory;
 
-/* Resize photos in the browser so they load fast on mobile data */
+// Resize photos in the browser so they load fast on mobile data
 async function resize(file, maxW, quality) {
   const img = await createImageBitmap(file);
   const sc = Math.min(1, maxW / img.width);
@@ -397,7 +402,7 @@ $('starterBtn').onclick = async () => {
   await b.commit(); await loadStories();
 };
 
-/* ── Tabs ── */
+// Tabs
 document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
   document.querySelectorAll('[data-tab]').forEach(x => x.classList.toggle('on', x === b));
   document.querySelectorAll('[data-panel]').forEach(p => p.classList.toggle('hide', p.dataset.panel !== b.dataset.tab));
@@ -407,7 +412,7 @@ document.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => {
 });
 const fmt = ts => ts && ts.toDate ? ts.toDate().toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
 
-/* ── TokSaves & prayer requests ── */
+// TokSaves & prayer requests
 let requests = [], rqFilter = 'new';
 async function loadRequests() {
   const snap = await getDocs(query(collection(db, 'requests'), orderBy('createdAt', 'desc'), limit(300)));
@@ -437,7 +442,7 @@ document.querySelectorAll('[data-rqf]').forEach(b => b.onclick = () => {
 });
 
 
-/* ── Song submissions (files stored on Cloudinary, details in Firebase) ── */
+// Song submissions (files stored on Cloudinary, details in Firebase)
 let songs = [], sgFilter = 'new';
 const SONG_STATUS = { new: 'New', shortlisted: 'Shortlisted', aired: 'On air', declined: 'Not suitable' };
 async function loadSongs() {
@@ -486,7 +491,7 @@ document.querySelectorAll('[data-sgf]').forEach(b => b.onclick = () => {
   sgFilter = b.dataset.sgf; document.querySelectorAll('[data-sgf]').forEach(x => x.classList.toggle('on', x === b)); renderSongs();
 });
 
-/* ── On demand episodes (Cloudinary audio + Firestore "episodes") ── */
+// On demand episodes (Cloudinary audio + Firestore "episodes")
 const CLOUDINARY = { cloudName: 'va65d0ab', uploadPreset: 'wrl_songs' };
 const OD_LOCAL = new Set([...document.querySelectorAll('#odProg optgroup[label^="Local"] option')].map(o => o.value));
 let episodes = [], odFilter = 'live';

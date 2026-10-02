@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /newsroom.html
+Disallow: /admin.html
+
+Sitemap: https://wantokradio.org/sitemap.xml
